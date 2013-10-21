@@ -23,11 +23,9 @@ namespace DA_RSA
         {
             InitializeComponent();
             Application.ApplicationExit += Application_ApplicationExit;
-            //ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
-            //GeneratorThread = new Thread(pts);
-            //GeneratorThread.Start(bitLength);
-            GenerateKeyPair(bitLength);
-            MessageBox.Show("n="+N.ToString() + "\r\n" +"e="+ E.ToString() + "\r\n" +"d="+ D.ToString());
+            ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
+            GeneratorThread = new Thread(pts);
+            GeneratorThread.Start(bitLength);
 
         }
 
@@ -148,6 +146,11 @@ namespace DA_RSA
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Log.Write();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(N.ToString() + " " + E.ToString() + " " + D.ToString());
         }
 
     }
