@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-namespace EasyRSA.Library
+namespace DA_RSA
 {
     class PrimeNumber
     {

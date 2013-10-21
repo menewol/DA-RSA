@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Numerics;
 
-namespace EasyRSA.Library
+namespace DA_RSA
 {
     static class Generator
     {

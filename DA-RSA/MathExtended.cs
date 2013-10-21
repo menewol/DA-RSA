@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace EasyRSA.Library
+namespace DA_RSA
 {
     static class MathExtended
     {
