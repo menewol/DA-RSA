@@ -146,5 +146,10 @@ namespace DA_RSA
         {
             Log.Write();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("COCK!");
+        }
     }
 }
