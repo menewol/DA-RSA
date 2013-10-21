@@ -19,11 +19,11 @@ namespace DA_RSA
         BigInteger N, E, D;
         Thread _pThread, _qThread, _eThread;
 
-        public void GenerateKeyPair()
+        public void GenerateKeyPair(int bitLength)
         {
             Generator.Initialize(2);
-            BigInteger numMin = BigInteger.Pow(2, (bitLength / 2) - 1);
-            BigInteger numMax = BigInteger.Pow(2, (bitLength / 2));
+            BigInteger numMin = BigInteger.Pow(2, (this.bitLength / 2) - 1);
+            BigInteger numMax = BigInteger.Pow(2, (this.bitLength / 2));
             var p = new PrimeNumber();
             var q = new PrimeNumber();
             p.SetNumber(Generator.Random(numMin, numMin));
@@ -58,7 +58,7 @@ namespace DA_RSA
                     {
                         MessageBox.Show(e.Message);
                     }
-
+                    
                     MessageBox.Show("Key generating error: timeout.\r\n\r\nIs your bit length too large?", "Error");
 
                     break;
@@ -86,6 +86,7 @@ namespace DA_RSA
                             MessageBox.Show("Key generating error: timeout.\r\n\r\nIs your bit length too large?", "Error");
                             break;
                         }
+                        
                     }
 
                     if (e.GetFoundPrime() && (BigInteger.GreatestCommonDivisor(e.GetPrimeNumber(), euler) == 1))
@@ -126,8 +127,18 @@ namespace DA_RSA
         public Form1()
         {
             InitializeComponent();
-            GenerateKeyPair();
-            MessageBox.Show(N.ToString() + "\r\n" + E.ToString() + "\r\n" + D.ToString());
+            //GenerateKeyPair(bitLength);
+            //MessageBox.Show(N.ToString() + "\r\n" + E.ToString() + "\r\n" + D.ToString());
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Log.Write();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Log.Write();
         }
     }
 }
