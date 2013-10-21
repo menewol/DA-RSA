@@ -58,8 +58,9 @@ namespace DA_RSA
                     {
                         MessageBox.Show(e.Message);
                     }
-                    
+
                     MessageBox.Show("Key generating error: timeout.\r\n\r\nIs your bit length too large?", "Error");
+                   Log.Add("Key generating error: timeout.\r\n\r\nIs your bit length too large?");
 
                     break;
                 }
@@ -84,6 +85,7 @@ namespace DA_RSA
                         if (ts.TotalMilliseconds > (1000 * 60 * 5))
                         {
                             MessageBox.Show("Key generating error: timeout.\r\n\r\nIs your bit length too large?", "Error");
+                            Log.Add("Key generating error: timeout.\r\n\r\nIs your bit length too large?");
                             break;
                         }
                         
@@ -108,15 +110,14 @@ namespace DA_RSA
                         // D
                         D = d;
 
-                        MessageBox.Show("Successfully created key pair.");
+                        Log.Add("Successfully created key pair.");
                     }
                     else
                     {
-                       MessageBox.Show("Error: Modular equation solver fault.");
+                      Log.Add("Error: Modular equation solver fault.");
 
-                        MessageBox.Show(
-                            "Error using mathematical extensions.\r\ne = " + e + "\r\neuler = " + euler + "\r\np = " +
-                            p.GetPrimeNumber() + "\r\n" + q.GetPrimeNumber(), "Error");
+                      MessageBox.Show("Error using mathematical extensions.\r\ne = " + e + "\r\neuler = " + euler + "\r\np = " + p.GetPrimeNumber() + "\r\n" + q.GetPrimeNumber(), "Error");
+                      Log.Add("Error using mathematical extensions.\r\ne = " + e + "\r\neuler = " + euler + "\r\np = " + p.GetPrimeNumber() + "\r\n" + q.GetPrimeNumber());
                     }
                 }
 
@@ -127,15 +128,20 @@ namespace DA_RSA
         public Form1()
         {
             InitializeComponent();
-            //GenerateKeyPair(bitLength);
-            //MessageBox.Show(N.ToString() + "\r\n" + E.ToString() + "\r\n" + D.ToString());
+            Application.ApplicationExit += Application_ApplicationExit;
+            GenerateKeyPair(bitLength);
+            Log.Add("n="+N.ToString() + "\r\n" +"e="+ E.ToString() + "\r\n" +"d="+ D.ToString());
+
         }
 
+        void Application_ApplicationExit(object sender, EventArgs e)
+        {
+            Log.Write();
+        }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Log.Write();
         }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Log.Write();
