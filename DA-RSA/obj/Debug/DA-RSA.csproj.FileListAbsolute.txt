@@ -1,2 +1,10 @@
 C:\Users\schueler\Desktop\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe.config
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe.config
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.pdb
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csprojResolveAssemblyReference.cache
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Form1.resources
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Properties.Resources.resources
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.GenerateResource.Cache
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
