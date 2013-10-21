@@ -17,10 +17,23 @@ namespace DA_RSA
     {
         int bitLength=1024;
         BigInteger N, E, D;
-        Thread _pThread, _qThread, _eThread;
+        Thread _pThread, _qThread, _eThread, GeneratorThread;
 
-        public void GenerateKeyPair(int bitLength)
+        public Form1()
         {
+            InitializeComponent();
+            Application.ApplicationExit += Application_ApplicationExit;
+            //ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
+            //GeneratorThread = new Thread(pts);
+            //GeneratorThread.Start(bitLength);
+            GenerateKeyPair(bitLength);
+            MessageBox.Show("n="+N.ToString() + "\r\n" +"e="+ E.ToString() + "\r\n" +"d="+ D.ToString());
+
+        }
+
+        public void GenerateKeyPair(object TEMPbitLength)
+        {
+            int bitLength = (int)TEMPbitLength;
             Generator.Initialize(2);
             BigInteger numMin = BigInteger.Pow(2, (this.bitLength / 2) - 1);
             BigInteger numMax = BigInteger.Pow(2, (this.bitLength / 2));
@@ -124,16 +137,6 @@ namespace DA_RSA
             }
 
         }
-
-        public Form1()
-        {
-            InitializeComponent();
-            Application.ApplicationExit += Application_ApplicationExit;
-            GenerateKeyPair(bitLength);
-            Log.Add("n="+N.ToString() + "\r\n" +"e="+ E.ToString() + "\r\n" +"d="+ D.ToString());
-
-        }
-
         void Application_ApplicationExit(object sender, EventArgs e)
         {
             Log.Write();
@@ -147,9 +150,5 @@ namespace DA_RSA
             Log.Write();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("COCK!");
-        }
     }
 }

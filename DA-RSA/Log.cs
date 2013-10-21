@@ -9,7 +9,7 @@ namespace DA_RSA
 {
     class Log
     {
-        static List<string> LoggedEvents;
+        static List<string> LoggedEvents = new List<string>();
         public static void Add(string message)
         {
         var sd = DateTime.Now.ToShortDateString();
@@ -19,8 +19,9 @@ namespace DA_RSA
         public static void Write()
         {
             string path = Directory.GetCurrentDirectory();
-            StreamWriter srw = new StreamWriter(path);
+            StreamWriter srw = new StreamWriter(path+"Log_"+DateTime.Now.ToShortDateString()+".log");
             srw.Write(LoggedEvents);
+            srw.Close();
         }
     }
 }
