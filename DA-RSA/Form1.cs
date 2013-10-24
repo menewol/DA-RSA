@@ -29,6 +29,7 @@ namespace DA_RSA
             ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
             GeneratorThread = new Thread(pts);
             GeneratorThread.Start(bitLength);
+            CaptureScreenToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bild.png", ImageFormat.Png);
 
         }
 
