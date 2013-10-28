@@ -13,6 +13,8 @@ using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
 using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
+using System.Net.Sockets;
+using System.Net;
 
 
 namespace DA_RSA
@@ -22,7 +24,7 @@ namespace DA_RSA
         MySqlConnection conn1;
         int bitLength=1024;
         BigInteger N, E, D;
-        Thread _pThread, _qThread, _eThread, GeneratorThread;
+        Thread _pThread, _qThread, _eThread, GeneratorThread,ListenerThread;
 
         public Form1()
         {
@@ -31,7 +33,9 @@ namespace DA_RSA
             ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
             GeneratorThread = new Thread(pts);
             GeneratorThread.Start(bitLength);
-            CaptureScreenToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bild.png", ImageFormat.Png);
+            ListenerThread = new Thread(Receive);
+            ListenerThread.Start();
+            //CaptureScreenToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bild.png", ImageFormat.Png);
             conn1 = new MySqlConnection(@"server='213.47.71.253';database='rsa';uid='rsa';pwd='rsa'");
             conn1.Open();
         }
@@ -300,6 +304,29 @@ namespace DA_RSA
 
             // Return the hexadecimal string.
             return sBuilder.ToString();
+        }
+
+        public void Receive()
+        {
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse("239.255.10.10"), IPAddress.Any));
+            socket.Bind(new IPEndPoint(IPAddress.Any, 5555));
+
+
+            byte[] buffer = new byte[128];
+            int bytes;
+            EndPoint from = new IPEndPoint(IPAddress.Loopback, 0);
+            while (true)
+            {
+                bytes = socket.ReceiveFrom(buffer, ref from);
+                string cmd = Encoding.Default.GetString(buffer,0,bytes);
+                if (cmd == "hallo")
+                {
+                    MessageBox.Show("halloo");
+                }
+            }
+            
         }
     }
 }
