@@ -15,6 +15,7 @@ using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
 using System.Net.Sockets;
 using System.Net;
+using System.Diagnostics;
 
 
 namespace DA_RSA
@@ -327,6 +328,13 @@ namespace DA_RSA
                 }
             }
             
+        }
+
+        public Process[] GetProcessList()
+        {
+            Process[] processlist = Process.GetProcesses();
+
+            return processlist;
         }
     }
 }
