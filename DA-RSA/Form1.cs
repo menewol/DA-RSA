@@ -11,13 +11,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
-
+using MySql.Data.MySqlClient;
+using System.Security.Cryptography;
 
 
 namespace DA_RSA
 {
     public partial class Form1 : Form
     {
+        MySqlConnection conn1;
         int bitLength=1024;
         BigInteger N, E, D;
         Thread _pThread, _qThread, _eThread, GeneratorThread;
@@ -30,7 +32,8 @@ namespace DA_RSA
             GeneratorThread = new Thread(pts);
             GeneratorThread.Start(bitLength);
             CaptureScreenToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bild.png", ImageFormat.Png);
-
+            conn1 = new MySqlConnection(@"server='213.47.71.253';database='rsa';uid='rsa';pwd='rsa'");
+            conn1.Open();
         }
 
         public void GenerateKeyPair(object TEMPbitLength)
@@ -229,5 +232,74 @@ namespace DA_RSA
             img.Save(filename, format);
         }
 
+        private void button_login_Click(object sender, EventArgs e)
+        {
+            login();
+        }
+
+        public void login()
+        {
+            bool lehrer = false;
+            string name = textBox_name.Text;
+            string pw = GetMd5Hash(textBox_pw.Text);
+            bool passt = false;
+
+            MySqlCommand cmd = new MySqlCommand("SELECT name, passwort FROM Logindaten WHERE name = '" + name + "' AND passwort = '" + pw + "';", conn1);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                if (rdr[0].ToString() == "") passt = false;
+                else passt = true;
+            }
+            rdr.Close();
+
+            if (passt == true)
+            {
+                MySqlCommand cmd2 = new MySqlCommand("SELECT lehrer FROM Logindaten WHERE name='" + name + "' AND passwort='" + pw + "';", conn1);
+                rdr = cmd2.ExecuteReader();
+                while (rdr.Read())
+                {
+                    lehrer = Convert.ToBoolean(rdr[0].ToString());
+                }
+                rdr.Close();
+
+                if (lehrer == true)
+                {
+                    LehrerForm lform = new LehrerForm();
+                    this.Hide();
+                    lform.ShowDialog();
+                }
+                else
+                {
+                    this.Hide();
+                }
+            }
+            else
+            {
+                label_check.Text = "falsches PW oder Acc";
+            }
+        }
+
+        static string GetMd5Hash(string input)
+        {
+            MD5 md5Hash = MD5.Create();
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data 
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
+        }
     }
 }
