@@ -105,9 +105,9 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(831, 6);
+            this.listBox1.Location = new System.Drawing.Point(745, 6);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 472);
+            this.listBox1.Size = new System.Drawing.Size(206, 472);
             this.listBox1.TabIndex = 0;
             // 
             // LehrerForm

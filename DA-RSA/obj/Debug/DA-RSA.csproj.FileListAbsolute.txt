@@ -8,3 +8,16 @@ C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.Generat
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csprojResolveAssemblyReference.cache
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe.config
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Form1.resources
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.LehrerForm.resources
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Properties.Resources.resources
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.GenerateResource.Cache
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.pdb
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Data.dll
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Data.Entity.dll
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Web.dll
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.SchuelerForm.resources
