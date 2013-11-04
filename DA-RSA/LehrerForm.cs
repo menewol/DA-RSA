@@ -147,5 +147,10 @@ namespace DA_RSA
             }
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(mcast, 5555));
+        }
     }
 }

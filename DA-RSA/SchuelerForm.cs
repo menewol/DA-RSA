@@ -52,9 +52,9 @@ namespace DA_RSA
             byte[] tmpBuffer = new byte[1024];
             EndPoint tmpEp = new IPEndPoint(IPAddress.Loopback, 0);
             int tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
-            MessageBox.Show(Encoding.Default.GetString(tmpBuffer, 0, tmp));
+            N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
-            MessageBox.Show(Encoding.Default.GetString(tmpBuffer, 0, tmp));
+            E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
 
 
 
@@ -67,7 +67,10 @@ namespace DA_RSA
                 string cmd = Encoding.Default.GetString(buffer, 0, bytes);
                 if (bytes != 0)
                 {
-                    //kommando analyse
+                    if (cmd == "GetScreenshot")
+                    {
+                        MessageBox.Show("hier.");
+                    }
                 }
             }
 
