@@ -19,7 +19,7 @@ namespace DA_RSA
         int bitLength = 1024;
         BigInteger N, E, D;
         Thread _pThread, _qThread, _eThread, GeneratorThread;
-        Socket socket;
+        Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         IPAddress mcast = IPAddress.Parse("239.255.10.10");
 
         public LehrerForm()
@@ -29,12 +29,14 @@ namespace DA_RSA
             GeneratorThread = new Thread(pts);
             GeneratorThread.Start(bitLength);
             
-            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            //socket.SendTo(Encoding.Default.GetBytes(this.textBox1.Text), new IPEndPoint(mcast, 5555));
 
 
         }
-
+        public void BroadCastKeyPair(BigInteger n, BigInteger e)
+        {
+            socket.SendTo(Encoding.Default.GetBytes(n.ToString()), new IPEndPoint(mcast, 5555));
+            socket.SendTo(Encoding.Default.GetBytes(e.ToString()), new IPEndPoint(mcast, 5555));
+        }
         public void GenerateKeyPair(object TEMPbitLength)
         {
             int bitLength = (int)TEMPbitLength;
@@ -77,6 +79,7 @@ namespace DA_RSA
                     }
 
                     MessageBox.Show("Key generating error: timeout.\r\n\r\nIs your bit length too large?", "Error");
+                    
                     Log.Add("Key generating error: timeout.\r\n\r\nIs your bit length too large?");
 
                     break;
@@ -102,6 +105,7 @@ namespace DA_RSA
                         if (ts.TotalMilliseconds > (1000 * 60 * 5))
                         {
                             MessageBox.Show("Key generating error: timeout.\r\n\r\nIs your bit length too large?", "Error");
+                            
                             Log.Add("Key generating error: timeout.\r\n\r\nIs your bit length too large?");
                             break;
                         }
@@ -120,20 +124,22 @@ namespace DA_RSA
                     {
                         // N
                         N = n;
-
+                      
+                        
                         // E
                         E = e.GetPrimeNumber();
 
                         // D
                         D = d;
-                        
 
+                        BroadCastKeyPair(N, E);
                         Log.Add("Successfully created key pair.");
+                        
                     }
                     else
                     {
                         Log.Add("Error: Modular equation solver fault.");
-
+                        
                         MessageBox.Show("Error using mathematical extensions.\r\ne = " + e + "\r\neuler = " + euler + "\r\np = " + p.GetPrimeNumber() + "\r\n" + q.GetPrimeNumber(), "Error");
                         Log.Add("Error using mathematical extensions.\r\ne = " + e + "\r\neuler = " + euler + "\r\np = " + p.GetPrimeNumber() + "\r\n" + q.GetPrimeNumber());
                     }
@@ -142,6 +148,5 @@ namespace DA_RSA
             }
 
         }
-
     }
 }

@@ -21,3 +21,5 @@ C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Web.dll
 C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
 C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
 C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.SchuelerForm.resources
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.LehrerForm.resources
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.SchuelerForm.resources
