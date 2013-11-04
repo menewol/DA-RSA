@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -19,6 +20,7 @@ namespace DA_RSA
     public partial class SchuelerForm : Form
     {
         Thread ListenerThread;
+        BigInteger N, E;
 
         public SchuelerForm()
         {
@@ -47,8 +49,16 @@ namespace DA_RSA
             socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse("239.255.10.10"), IPAddress.Any));
             socket.Bind(new IPEndPoint(IPAddress.Any, 5555));
 
+            byte[] tmpBuffer = new byte[1024];
+            EndPoint tmpEp = new IPEndPoint(IPAddress.Loopback, 0);
+            int tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
+            MessageBox.Show(Encoding.Default.GetString(tmpBuffer, 0, tmp));
+            tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
+            MessageBox.Show(Encoding.Default.GetString(tmpBuffer, 0, tmp));
 
-            byte[] buffer = new byte[128];
+
+
+            byte[] buffer = new byte[1024];
             int bytes;
             EndPoint from = new IPEndPoint(IPAddress.Loopback, 0);
             while (true)

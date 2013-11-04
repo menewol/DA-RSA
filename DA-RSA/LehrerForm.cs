@@ -28,7 +28,6 @@ namespace DA_RSA
             ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
             GeneratorThread = new Thread(pts);
             GeneratorThread.Start(bitLength);
-            
 
 
         }
