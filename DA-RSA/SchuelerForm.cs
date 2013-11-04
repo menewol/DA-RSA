@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace DA_RSA
 {
@@ -27,6 +28,8 @@ namespace DA_RSA
             InitializeComponent();
             ListenerThread = new Thread(Receive);
             ListenerThread.Start();
+            OnAppStart();
+            Application.ApplicationExit += new EventHandler(this.OnAppExit);
         }
 
         private void SchuelerForm_Shown(object sender, EventArgs e)
@@ -153,6 +156,41 @@ namespace DA_RSA
         {
             Image img = CaptureScreen();
             img.Save(filename, format);
+        }
+        public void WriteReg(UInt32 Value)
+        {
+            string KeyName = "DisableTaskMgr";
+            try
+            {
+                // Setting
+                RegistryKey rk = Registry.CurrentUser;
+                // I have to use CreateSubKey 
+                // (create or open it if already exits), 
+                // 'cause OpenSubKey open a subKey as read-only
+                RegistryKey sk1 = rk.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\");
+                // Save the value
+
+                sk1.SetValue(KeyName, Value, RegistryValueKind.DWord);
+            }
+            catch (Exception e)
+            {
+                // AAAAAAAAAAARGH, an error!
+                MessageBox.Show("Writing registry " + KeyName.ToUpper());
+            }
+        }
+
+        private void OnAppExit(object sender, EventArgs e)
+        {
+            UInt32 m;
+            UInt32.TryParse("0", out m);
+            WriteReg(m);
+        }
+
+        private void OnAppStart()
+        {
+            UInt32 m;
+            UInt32.TryParse("1", out m);
+            WriteReg(m);
         }
         //CaptureScreenToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bild.png", ImageFormat.Png);
     }
