@@ -28,6 +28,7 @@ namespace DA_RSA
             ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
             GeneratorThread = new Thread(pts);
             GeneratorThread.Start(bitLength);
+            button1.Enabled = false;
 
 
         }
@@ -35,6 +36,9 @@ namespace DA_RSA
         {
             socket.SendTo(Encoding.Default.GetBytes(n.ToString()), new IPEndPoint(mcast, 5555));
             socket.SendTo(Encoding.Default.GetBytes(e.ToString()), new IPEndPoint(mcast, 5555));
+            button1.Invoke((Action)delegate {
+                button1.Enabled = true;
+            });
         }
         public void GenerateKeyPair(object TEMPbitLength)
         {
