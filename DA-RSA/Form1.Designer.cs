@@ -90,7 +90,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(302, 284);
+            this.ClientSize = new System.Drawing.Size(307, 109);
             this.Controls.Add(this.label_check);
             this.Controls.Add(this.textBox_pw);
             this.Controls.Add(this.textBox_name);

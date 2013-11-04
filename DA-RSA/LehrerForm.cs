@@ -18,7 +18,7 @@ namespace DA_RSA
     {
         int bitLength = 1024;
         BigInteger N, E, D;
-        Thread _pThread, _qThread, _eThread, GeneratorThread;
+        Thread _pThread, _qThread, _eThread, GeneratorThread,t;
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         IPAddress mcast = IPAddress.Parse("239.255.10.10");
 
@@ -154,7 +154,33 @@ namespace DA_RSA
 
         private void button1_Click(object sender, EventArgs e)
         {
+            t = new Thread(doRevImage);
+            t.IsBackground = true;
+            t.Start();
             socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(mcast, 5555));
+        }
+        private void doRevImage()
+        {
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            //receive screenshot on port 6868.
+            s.Bind(new IPEndPoint(IPAddress.Any, 6868));
+            byte[] buff = new byte[1024];
+            EndPoint endp = new IPEndPoint(IPAddress.Any, 0);
+            while (true)
+            {
+                int anz = s.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
+                if (anz != 0)
+                {
+                    try
+                    {
+                        //screenshot anzeigen
+                    }
+                    finally
+                    {
+                        t.Abort();
+                    }
+                }
+            }
         }
     }
 }

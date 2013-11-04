@@ -15,12 +15,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DA_RSA
 {
     public partial class SchuelerForm : Form
     {
-        Thread ListenerThread;
+        Thread ListenerThread,ReceiverThread;
         BigInteger N, E;
 
         public SchuelerForm()
@@ -59,9 +60,21 @@ namespace DA_RSA
             tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
             E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
+            IPEndPoint ipep = (IPEndPoint)tmpEp;
+            ParameterizedThreadStart pts = new ParameterizedThreadStart(doRev);
+            ReceiverThread = new Thread(pts);
+            ReceiverThread.Start(ipep);
+            socket.Close();
+            ListenerThread.Abort();
 
-
-
+        }
+        public void doRev(object tmpserver)
+        {
+            IPEndPoint server = (IPEndPoint)tmpserver;
+            server.Port = 5555;
+            notifyIcon1.ShowBalloonTip(2000, "Server", tmpserver.ToString() + "||" + server.ToString(), ToolTipIcon.Info);
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.Bind(server);
             byte[] buffer = new byte[1024];
             int bytes;
             EndPoint from = new IPEndPoint(IPAddress.Loopback, 0);
@@ -77,7 +90,6 @@ namespace DA_RSA
                     }
                 }
             }
-
         }
 
         private class GDI32
@@ -176,6 +188,7 @@ namespace DA_RSA
             {
                 // AAAAAAAAAAARGH, an error!
                 MessageBox.Show("Writing registry " + KeyName.ToUpper());
+                Log.Add(e.Message);
             }
         }
 
@@ -184,13 +197,14 @@ namespace DA_RSA
             UInt32 m;
             UInt32.TryParse("0", out m);
             WriteReg(m);
+            Log.Write();
         }
 
         private void OnAppStart()
         {
             UInt32 m;
             UInt32.TryParse("1", out m);
-            WriteReg(m);
+            //WriteReg(m);
         }
         //CaptureScreenToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bild.png", ImageFormat.Png);
     }
