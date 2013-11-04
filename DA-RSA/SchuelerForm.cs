@@ -55,6 +55,7 @@ namespace DA_RSA
             N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
             E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
+            notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
 
 
 
@@ -69,7 +70,7 @@ namespace DA_RSA
                 {
                     if (cmd == "GetScreenshot")
                     {
-                        MessageBox.Show("hier.");
+                        MessageBox.Show(from.ToString());
                     }
                 }
             }
