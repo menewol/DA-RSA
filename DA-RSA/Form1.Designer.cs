@@ -34,11 +34,12 @@
             this.textBox_name = new System.Windows.Forms.TextBox();
             this.textBox_pw = new System.Windows.Forms.TextBox();
             this.label_check = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button_login
             // 
-            this.button_login.Location = new System.Drawing.Point(91, 75);
+            this.button_login.Location = new System.Drawing.Point(15, 74);
             this.button_login.Name = "button_login";
             this.button_login.Size = new System.Drawing.Size(75, 23);
             this.button_login.TabIndex = 0;
@@ -86,11 +87,22 @@
             this.label_check.Size = new System.Drawing.Size(0, 13);
             this.label_check.TabIndex = 5;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(168, 74);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(122, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Benutzer erstellen";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(307, 109);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label_check);
             this.Controls.Add(this.textBox_pw);
             this.Controls.Add(this.textBox_name);
@@ -114,6 +126,7 @@
         private System.Windows.Forms.TextBox textBox_name;
         private System.Windows.Forms.TextBox textBox_pw;
         private System.Windows.Forms.Label label_check;
+        private System.Windows.Forms.Button button1;
 
 
 

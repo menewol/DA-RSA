@@ -28,9 +28,7 @@ namespace DA_RSA
         {
             InitializeComponent();
             Application.ApplicationExit += Application_ApplicationExit;
-
             conn1 = new MySqlConnection(@"server='213.47.71.253';database='rsa';uid='rsa';pwd='rsa'");
-            conn1.Open();
         }
 
         void Application_ApplicationExit(object sender, EventArgs e)
@@ -54,6 +52,7 @@ namespace DA_RSA
 
         public void login()
         {
+            conn1.Open();
             bool lehrer = false;
             string name = textBox_name.Text;
             string pw = GetMd5Hash(textBox_pw.Text);
@@ -96,6 +95,7 @@ namespace DA_RSA
             {
                 label_check.Text = "falsches PW oder Acc";
             }
+            conn1.Close();
         }
 
         static string GetMd5Hash(string input)
@@ -117,6 +117,12 @@ namespace DA_RSA
 
             // Return the hexadecimal string.
             return sBuilder.ToString();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            BenutzerErstellen berst = new BenutzerErstellen(conn1);
+            berst.ShowDialog();
         }
 
 
