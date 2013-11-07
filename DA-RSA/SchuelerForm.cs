@@ -54,7 +54,7 @@ namespace DA_RSA
             socket.Bind(new IPEndPoint(IPAddress.Any, 5555));
 
             byte[] tmpBuffer = new byte[1024];
-            EndPoint tmpEp = new IPEndPoint(IPAddress.Loopback, 0);
+            EndPoint tmpEp = new IPEndPoint(IPAddress.Any, 0);
             int tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
             N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
@@ -80,7 +80,7 @@ namespace DA_RSA
             socket.Bind(server);
             byte[] buffer = new byte[1024];
             int bytes;
-            EndPoint from = new IPEndPoint(IPAddress.Loopback, 0);
+            EndPoint from = new IPEndPoint(IPAddress.Any, 0);
             while (true)
             {
                 bytes = socket.ReceiveFrom(buffer, ref from);
@@ -208,6 +208,11 @@ namespace DA_RSA
             UInt32 m;
             UInt32.TryParse("1", out m);
             //WriteReg(m);
+        }
+
+        private void SchuelerForm_Load(object sender, EventArgs e)
+        {
+
         }
         //CaptureScreenToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bild.png", ImageFormat.Png);
     }

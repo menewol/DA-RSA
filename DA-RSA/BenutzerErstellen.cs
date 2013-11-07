@@ -31,7 +31,7 @@ namespace DA_RSA
             pw = GetMd5Hash(textBox2.Text);
             if (radioButton1.Checked == true) type = "0";
             else if (radioButton2.Checked == true) type = "1";
-            MySqlCommand cmd1 = new MySqlCommand("SELECT name FROM Logindaten WHERE name='" + name + "';");
+            MySqlCommand cmd1 = new MySqlCommand("SELECT name FROM Logindaten WHERE name='" + name + "';", conn1);
             MySqlDataReader rdr1 = cmd1.ExecuteReader();
             while (rdr1.Read())
             {
@@ -45,8 +45,9 @@ namespace DA_RSA
             }
             else
             {
-                MySqlCommand cmd2 = new MySqlCommand("INSERT INTO rsa.logindaten (name, passwort, lehrer) VALUES ('" + name + "', '" + pw + "', '" + type + "');");
+                MySqlCommand cmd2 = new MySqlCommand("INSERT INTO rsa.logindaten (name, passwort, lehrer) VALUES ('" + name + "', '" + pw + "', '" + type + "');", conn1);
                 cmd2.ExecuteNonQuery();
+                MessageBox.Show("Benutzer erstellt:\r\n Name: " + name + "\r\n Passwort: " + pw + "\r\n Lehrer: " + type);
             }
             conn1.Close();
         }

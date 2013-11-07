@@ -46,6 +46,7 @@
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Name = "SchuelerForm";
             this.Text = "SchuelerForm";
+            this.Load += new System.EventHandler(this.SchuelerForm_Load);
             this.Shown += new System.EventHandler(this.SchuelerForm_Shown);
             this.ResumeLayout(false);
 
