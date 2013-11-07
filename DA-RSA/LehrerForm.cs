@@ -18,17 +18,22 @@ namespace DA_RSA
     {
         int bitLength = 1024;
         BigInteger N, E, D;
-        Thread _pThread, _qThread, _eThread, GeneratorThread,t;
+        Thread _pThread, _qThread, _eThread, GeneratorThread,t,authThread;
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         IPAddress mcast = IPAddress.Parse("239.255.10.10");
+        List<IPAddress> clients = new List<IPAddress>();
 
         public LehrerForm()
         {
             InitializeComponent();
+            authThread = new Thread(authListener);
+            authThread.Start();
             ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
             GeneratorThread = new Thread(pts);
             GeneratorThread.Start(bitLength);
+
             button1.Enabled = false;
+
 
 
         }
@@ -157,11 +162,28 @@ namespace DA_RSA
             t = new Thread(doRevImage);
             t.IsBackground = true;
             t.Start();
-            socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(mcast, 5555));
+            socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(mcast, 6868));
+        }
+        private void authListener()
+        {
+            Socket tmp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            tmp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            tmp.Bind(new IPEndPoint(IPAddress.Any, 5555));
+            byte[] buff = new byte[1024];
+            while (true)
+            {
+                EndPoint endp = new IPEndPoint(IPAddress.Any, 0);
+                int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
+                if (anz != 0)
+                {
+                    MessageBox.Show(endp.ToString());
+                }
+            }
         }
         private void doRevImage()
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             //receive screenshot on port 6868.
             s.Bind(new IPEndPoint(IPAddress.Any, 6868));
             byte[] buff = new byte[1024];

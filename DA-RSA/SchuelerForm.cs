@@ -61,6 +61,9 @@ namespace DA_RSA
             E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
             IPEndPoint ipep = (IPEndPoint)tmpEp;
+            ipep.Port = 5555;
+            Socket authSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            authSocket.SendTo(Encoding.Default.GetBytes("blabla"), ipep);
             ParameterizedThreadStart pts = new ParameterizedThreadStart(doRev);
             ReceiverThread = new Thread(pts);
             ReceiverThread.Start(ipep);
@@ -71,7 +74,7 @@ namespace DA_RSA
         public void doRev(object tmpserver)
         {
             IPEndPoint server = (IPEndPoint)tmpserver;
-            server.Port = 5555;
+            server.Port = 6868;
             notifyIcon1.ShowBalloonTip(2000, "Server", tmpserver.ToString() + "||" + server.ToString(), ToolTipIcon.Info);
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             socket.Bind(server);

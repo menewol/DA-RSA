@@ -40,3 +40,5 @@ C:\Users\Jensi\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.SchuelerForm.reso
 C:\Users\Jensi\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.GenerateResource.Cache
 C:\Users\Jensi\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
 C:\Users\Jensi\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.BenutzerErstellen.resources
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csprojResolveAssemblyReference.cache
