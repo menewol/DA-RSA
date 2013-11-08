@@ -22,6 +22,8 @@ namespace DA_RSA
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         IPAddress mcast = IPAddress.Parse("239.255.10.10");
         List<IPAddress> clients = new List<IPAddress>();
+        Socket tmp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            
 
         public LehrerForm()
         {
@@ -31,6 +33,12 @@ namespace DA_RSA
             ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
             GeneratorThread = new Thread(pts);
             GeneratorThread.Start(bitLength);
+
+            tmp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            tmp.Bind(new IPEndPoint(IPAddress.Any, 5555));
+            t = new Thread(doRevImage);
+            t.IsBackground = true;
+            t.Start();
 
             button1.Enabled = false;
 
@@ -159,26 +167,23 @@ namespace DA_RSA
 
         private void button1_Click(object sender, EventArgs e)
         {
-            t = new Thread(doRevImage);
-            t.IsBackground = true;
-            t.Start();
-            socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(mcast, 6868));
+            
+            socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(IPAddress.Loopback, 6868));
         }
         private void authListener()
         {
-            Socket tmp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            tmp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            tmp.Bind(new IPEndPoint(IPAddress.Any, 5555));
             byte[] buff = new byte[1024];
+            EndPoint endp = new IPEndPoint(IPAddress.Any, 0);
+            MessageBox.Show("recv");
             while (true)
             {
-                EndPoint endp = new IPEndPoint(IPAddress.Any, 0);
                 int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
                 if (anz != 0)
                 {
-                    MessageBox.Show(endp.ToString());
+                    listBox1.Invoke((Action)delegate { listBox1.Items.Add(endp.ToString()); });
                 }
             }
+            MessageBox.Show("recv end");
         }
         private void doRevImage()
         {

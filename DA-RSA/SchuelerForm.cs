@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DA_RSA
@@ -59,15 +60,16 @@ namespace DA_RSA
             N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
             E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
-            notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
+            //notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
             IPEndPoint ipep = (IPEndPoint)tmpEp;
             ipep.Port = 5555;
             Socket authSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.Close();
             authSocket.SendTo(Encoding.Default.GetBytes("blabla"), ipep);
+            MessageBox.Show("sent");
             ParameterizedThreadStart pts = new ParameterizedThreadStart(doRev);
             ReceiverThread = new Thread(pts);
             ReceiverThread.Start(ipep);
-            socket.Close();
             ListenerThread.Abort();
 
         }
@@ -75,7 +77,7 @@ namespace DA_RSA
         {
             IPEndPoint server = (IPEndPoint)tmpserver;
             server.Port = 6868;
-            notifyIcon1.ShowBalloonTip(2000, "Server", tmpserver.ToString() + "||" + server.ToString(), ToolTipIcon.Info);
+            notifyIcon1.ShowBalloonTip(2000, "Server", server.ToString(), ToolTipIcon.Info);
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             socket.Bind(server);
             byte[] buffer = new byte[1024];
@@ -89,7 +91,7 @@ namespace DA_RSA
                 {
                     if (cmd == "GetScreenshot")
                     {
-                        MessageBox.Show(from.ToString());
+                        CaptureScreenToFile(Environment.SpecialFolder.MyPictures + "\\" + "Screenshot_" + DateTime.Now.ToShortDateString() + "_" + DateTime.Now.ToShortTimeString(), ImageFormat.Png);
                     }
                 }
             }
