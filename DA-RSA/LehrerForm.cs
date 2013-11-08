@@ -37,9 +37,9 @@ namespace DA_RSA
 
             tmp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             tmp.Bind(new IPEndPoint(IPAddress.Any, 5555));
-            t = new Thread(doRevImage);
-            t.IsBackground = true;
-            t.Start();
+            //t = new Thread(doRevImage);
+            //t.IsBackground = true;
+            //t.Start();
 
             button1.Enabled = false;
 
@@ -172,6 +172,24 @@ namespace DA_RSA
             {
                 string[] s = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
                 socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(IPAddress.Parse(s[0]), 6868));
+                TcpListener listen = new TcpListener(IPAddress.Any, 6868);
+                TcpClient client;
+                NetworkStream netStream;
+                int bytesRead = 0;
+
+                listen.Start();
+
+                client = listen.AcceptTcpClient();
+                netStream = client.GetStream();
+
+                byte[] length = new byte[8];
+                bytesRead = netStream.Read(length, 0, 8);
+                int z = Convert.ToInt32(Encoding.Default.GetString(length));
+
+                byte[] screen = new byte[z];
+                netStream.Read(screen, 8, z);
+
+                File.WriteAllBytes("C:\\Users\\Ayhan Cetin\\Pictures\\screenshot.jpeg", screen);
             }
         }
         private void authListener()
