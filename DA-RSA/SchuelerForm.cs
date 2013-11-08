@@ -77,8 +77,11 @@ namespace DA_RSA
         public void doRev(object tmpserver)
         {
             IPEndPoint server = (IPEndPoint)tmpserver;
+            TcpClient client = new TcpClient();
+            
             server.Port = 6868;
             server.Address = IPAddress.Any;
+            
             notifyIcon1.ShowBalloonTip(2000, "Server", server.ToString(), ToolTipIcon.Info);
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             socket.Bind(server);
@@ -87,18 +90,32 @@ namespace DA_RSA
             EndPoint from = new IPEndPoint(IPAddress.Any, 0);
             while (true)
             {
+                NetworkStream nws;
+                
                 bytes = socket.ReceiveFrom(buffer, ref from);
+
                 string cmd = Encoding.Default.GetString(buffer, 0, bytes);
+
+                
                 if (bytes != 0)
                 {
                     if (cmd == "GetScreenshot")
                     {
                         MessageBox.Show("C:\\Users\\Drmola\\Pictures\\Screenshot.png");
                         CaptureScreenToFile("C:\\Users\\Drmola\\Pictures\\Screenshot1.jpeg", ImageFormat.Jpeg);
-                        NetworkStream nws = new NetworkStream(socket);
                         byte[] screensend = File.ReadAllBytes("C:\\Users\\Drmola\\Pictures\\Screenshot1.jpeg");
-                        nws.Write(screensend, 0, screensend.Length);
-                        //socket.SendTo(screensend, (IPEndPoint)from);
+                        client.Connect((IPEndPoint)from);
+                        //nws = client.GetStream();
+                        //nws.Write(screensend, 0, screensend.Length);
+                        byte[] tmp = new byte[screensend.Length + 8];
+                        screensend.CopyTo(tmp, 8);
+                        int z = screensend.Length.ToString().Length;
+                        byte[] iwas = new byte[8];
+                        iwas = Encoding.Default.GetBytes(z.ToString());
+                        iwas.CopyTo(tmp, 0);
+                        //socket.SendTo(tmp, (IPEndPoint)from);
+                        nws = client.GetStream();
+                        nws.Write(tmp, 0, tmp.Length);
                     }
                 }
             }

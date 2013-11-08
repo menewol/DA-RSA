@@ -187,7 +187,7 @@ namespace DA_RSA
                     listBox1.Invoke((Action)delegate { listBox1.Items.Add(endp.ToString()); });
                 }
             }
-            MessageBox.Show("recv end");
+            
         }
         private void doRevImage()
         {
@@ -211,7 +211,9 @@ namespace DA_RSA
                         }
                         //File.WriteAllBytes("C:\\Users\\Drmola\\Pictures\\Screenshot2.png", screen);
                         StreamWriter srw = new StreamWriter("C:\\Users\\Drmola\\Pictures\\Screenshot2.png");
-                        srw.Write(screen);
+                        
+
+                        //srw.Write(tmp);
                     }
                     finally
                     {
