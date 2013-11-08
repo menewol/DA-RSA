@@ -209,8 +209,9 @@ namespace DA_RSA
                         {
                             screen[i] = buff[i];
                         }
-                        File.WriteAllBytes("C:\\Users\\Drmola\\Pictures\\Screenshot2.png", screen);
-
+                        //File.WriteAllBytes("C:\\Users\\Drmola\\Pictures\\Screenshot2.png", screen);
+                        StreamWriter srw = new StreamWriter("C:\\Users\\Drmola\\Pictures\\Screenshot2.png");
+                        srw.Write(screen);
                     }
                     finally
                     {
