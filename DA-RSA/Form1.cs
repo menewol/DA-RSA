@@ -83,12 +83,14 @@ namespace DA_RSA
                     LehrerForm lform = new LehrerForm();
                     this.Hide();
                     lform.ShowDialog();
+                    this.Close();
                 }
                 else
                 {
                     SchuelerForm sform = new SchuelerForm();
                     this.Hide();
                     sform.ShowDialog();
+                    this.Close();
                 }
             }
             else

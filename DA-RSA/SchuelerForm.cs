@@ -32,6 +32,7 @@ namespace DA_RSA
             ListenerThread.Start();
             OnAppStart();
             Application.ApplicationExit += new EventHandler(this.OnAppExit);
+            Application.ApplicationExit += new EventHandler(this.OnAppExit2);
         }
 
         private void SchuelerForm_Shown(object sender, EventArgs e)
@@ -91,7 +92,10 @@ namespace DA_RSA
                 {
                     if (cmd == "GetScreenshot")
                     {
-                        CaptureScreenToFile(Environment.SpecialFolder.MyPictures + "\\" + "Screenshot_" + DateTime.Now.ToShortDateString() + "_" + DateTime.Now.ToShortTimeString(), ImageFormat.Png);
+                        MessageBox.Show("C:\\Users\\Drmola\\Pictures\\Screenshot.png");
+                        CaptureScreenToFile("C:\\Users\\Drmola\\Pictures\\Screenshot1.jpeg", ImageFormat.Jpeg);
+                        byte[] screensend = File.ReadAllBytes("C:\\Users\\Drmola\\Pictures\\Screenshot1.jpeg");
+                        socket.SendTo(screensend, server);
                     }
                 }
             }
@@ -210,6 +214,11 @@ namespace DA_RSA
             UInt32 m;
             UInt32.TryParse("1", out m);
             //WriteReg(m);
+        }
+
+        private void OnAppExit2(object sender, EventArgs e)
+        {
+            
         }
 
         private void SchuelerForm_Load(object sender, EventArgs e)

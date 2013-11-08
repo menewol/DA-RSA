@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DA_RSA
 {
@@ -167,8 +168,11 @@ namespace DA_RSA
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(IPAddress.Loopback, 6868));
+            if (listBox1.SelectedIndex != -1)
+            {
+                string[] s = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+                socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(IPAddress.Parse(s[0]), 6868));
+            }
         }
         private void authListener()
         {
@@ -196,11 +200,17 @@ namespace DA_RSA
             while (true)
             {
                 int anz = s.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
+                byte[] screen = new byte[anz];
                 if (anz != 0)
                 {
                     try
                     {
-                        //screenshot anzeigen
+                        for (int i = 0; i < anz; i++)
+                        {
+                            screen[i] = buff[i];
+                        }
+                        File.WriteAllBytes("C:\\Users\\Drmola\\Pictures\\Screenshot2.png", screen);
+
                     }
                     finally
                     {
