@@ -47,7 +47,8 @@ namespace DA_RSA
 
         private void button_login_Click(object sender, EventArgs e)
         {
-            login();
+            //login();
+            loginwN();
         }
 
         public void login()
@@ -83,14 +84,12 @@ namespace DA_RSA
                     LehrerForm lform = new LehrerForm();
                     this.Hide();
                     lform.ShowDialog();
-                    this.Close();
                 }
                 else
                 {
                     SchuelerForm sform = new SchuelerForm();
                     this.Hide();
                     sform.ShowDialog();
-                    this.Close();
                 }
             }
             else
@@ -98,6 +97,28 @@ namespace DA_RSA
                 label_check.Text = "falsches PW oder Acc";
             }
             conn1.Close();
+        }
+
+        public void loginwN()
+        {
+            bool lehrer = false;
+            string name = textBox_name.Text;
+            string pw = textBox_pw.Text;
+            bool passt = false;
+
+            if (name == "schueler" && pw == "schueler")
+            {
+                SchuelerForm sform = new SchuelerForm();
+                this.Hide();
+                sform.ShowDialog();
+            }
+            else if (name == "lehrer" && pw == "lehrer")
+            {
+                LehrerForm lform = new LehrerForm();
+                this.Hide();
+                lform.ShowDialog();
+            }
+            else MessageBox.Show("Falscher Benutzername oder Passwort!");
         }
 
         static string GetMd5Hash(string input)

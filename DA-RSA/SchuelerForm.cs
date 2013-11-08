@@ -78,6 +78,7 @@ namespace DA_RSA
         {
             IPEndPoint server = (IPEndPoint)tmpserver;
             server.Port = 6868;
+            server.Address = IPAddress.Any;
             notifyIcon1.ShowBalloonTip(2000, "Server", server.ToString(), ToolTipIcon.Info);
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             socket.Bind(server);
@@ -94,8 +95,10 @@ namespace DA_RSA
                     {
                         MessageBox.Show("C:\\Users\\Drmola\\Pictures\\Screenshot.png");
                         CaptureScreenToFile("C:\\Users\\Drmola\\Pictures\\Screenshot1.jpeg", ImageFormat.Jpeg);
+                        NetworkStream nws = new NetworkStream(socket);
                         byte[] screensend = File.ReadAllBytes("C:\\Users\\Drmola\\Pictures\\Screenshot1.jpeg");
-                        socket.SendTo(screensend, server);
+                        nws.Write(screensend, 0, screensend.Length);
+                        //socket.SendTo(screensend, (IPEndPoint)from);
                     }
                 }
             }
