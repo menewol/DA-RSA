@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace DA_RSA
 {
@@ -23,8 +22,6 @@ namespace DA_RSA
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         IPAddress mcast = IPAddress.Parse("239.255.10.10");
         List<IPAddress> clients = new List<IPAddress>();
-        Socket tmp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            
 
         public LehrerForm()
         {
@@ -34,12 +31,6 @@ namespace DA_RSA
             ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
             GeneratorThread = new Thread(pts);
             GeneratorThread.Start(bitLength);
-
-            tmp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            tmp.Bind(new IPEndPoint(IPAddress.Any, 5555));
-            //t = new Thread(doRevImage);
-            //t.IsBackground = true;
-            //t.Start();
 
             button1.Enabled = false;
 
@@ -168,44 +159,26 @@ namespace DA_RSA
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (listBox1.SelectedIndex != -1)
-            {
-                string[] s = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
-                socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(IPAddress.Parse(s[0]), 6868));
-                TcpListener listen = new TcpListener(IPAddress.Any, 6868);
-                TcpClient client;
-                NetworkStream netStream;
-                int bytesRead = 0;
-
-                listen.Start();
-
-                client = listen.AcceptTcpClient();
-                netStream = client.GetStream();
-
-                byte[] length = new byte[8];
-                bytesRead = netStream.Read(length, 0, 8);
-                int z = Convert.ToInt32(Encoding.Default.GetString(length));
-
-                byte[] screen = new byte[z];
-                netStream.Read(screen, 8, z);
-
-                File.WriteAllBytes("C:\\Users\\Ayhan Cetin\\Pictures\\screenshot.jpeg", screen);
-            }
+            t = new Thread(doRevImage);
+            t.IsBackground = true;
+            t.Start();
+            socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(mcast, 6868));
         }
         private void authListener()
         {
+            Socket tmp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            tmp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            tmp.Bind(new IPEndPoint(IPAddress.Any, 5555));
             byte[] buff = new byte[1024];
-            EndPoint endp = new IPEndPoint(IPAddress.Any, 0);
-            MessageBox.Show("recv");
             while (true)
             {
+                EndPoint endp = new IPEndPoint(IPAddress.Any, 0);
                 int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
                 if (anz != 0)
                 {
-                    listBox1.Invoke((Action)delegate { listBox1.Items.Add(endp.ToString()); });
+                    MessageBox.Show(endp.ToString());
                 }
             }
-            
         }
         private void doRevImage()
         {
@@ -218,20 +191,11 @@ namespace DA_RSA
             while (true)
             {
                 int anz = s.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
-                byte[] screen = new byte[anz];
                 if (anz != 0)
                 {
                     try
                     {
-                        for (int i = 0; i < anz; i++)
-                        {
-                            screen[i] = buff[i];
-                        }
-                        //File.WriteAllBytes("C:\\Users\\Drmola\\Pictures\\Screenshot2.png", screen);
-                        StreamWriter srw = new StreamWriter("C:\\Users\\Drmola\\Pictures\\Screenshot2.png");
-                        
-
-                        //srw.Write(tmp);
+                        //screenshot anzeigen
                     }
                     finally
                     {

@@ -15,7 +15,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DA_RSA
@@ -32,7 +31,6 @@ namespace DA_RSA
             ListenerThread.Start();
             OnAppStart();
             Application.ApplicationExit += new EventHandler(this.OnAppExit);
-            Application.ApplicationExit += new EventHandler(this.OnAppExit2);
         }
 
         private void SchuelerForm_Shown(object sender, EventArgs e)
@@ -61,28 +59,24 @@ namespace DA_RSA
             N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
             E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
-            //notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
+            notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
             IPEndPoint ipep = (IPEndPoint)tmpEp;
             ipep.Port = 5555;
             Socket authSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            socket.Close();
             authSocket.SendTo(Encoding.Default.GetBytes("blabla"), ipep);
-            MessageBox.Show("sent");
             ParameterizedThreadStart pts = new ParameterizedThreadStart(doRev);
             ReceiverThread = new Thread(pts);
             ReceiverThread.Start(ipep);
+            socket.Close();
             ListenerThread.Abort();
 
         }
+
         public void doRev(object tmpserver)
         {
             IPEndPoint server = (IPEndPoint)tmpserver;
-            TcpClient client = new TcpClient();
-            
             server.Port = 6868;
-            server.Address = IPAddress.Any;
-            
-            notifyIcon1.ShowBalloonTip(2000, "Server", server.ToString(), ToolTipIcon.Info);
+            notifyIcon1.ShowBalloonTip(2000, "Server", tmpserver.ToString() + "||" + server.ToString(), ToolTipIcon.Info);
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             socket.Bind(server);
             byte[] buffer = new byte[1024];
@@ -90,32 +84,13 @@ namespace DA_RSA
             EndPoint from = new IPEndPoint(IPAddress.Any, 0);
             while (true)
             {
-                NetworkStream nws;
-                
                 bytes = socket.ReceiveFrom(buffer, ref from);
-
                 string cmd = Encoding.Default.GetString(buffer, 0, bytes);
-
-                
                 if (bytes != 0)
                 {
                     if (cmd == "GetScreenshot")
                     {
-                        MessageBox.Show("C:\\Users\\Drmola\\Pictures\\Screenshot.png");
-                        CaptureScreenToFile("C:\\Users\\Drmola\\Pictures\\Screenshot1.jpeg", ImageFormat.Jpeg);
-                        byte[] screensend = File.ReadAllBytes("C:\\Users\\Drmola\\Pictures\\Screenshot1.jpeg");
-                        client.Connect((IPEndPoint)from);
-                        //nws = client.GetStream();
-                        //nws.Write(screensend, 0, screensend.Length);
-                        byte[] tmp = new byte[screensend.Length + 8];
-                        screensend.CopyTo(tmp, 8);
-                        int z = screensend.Length.ToString().Length;
-                        byte[] iwas = new byte[8];
-                        iwas = Encoding.Default.GetBytes(z.ToString());
-                        iwas.CopyTo(tmp, 0);
-                        //socket.SendTo(tmp, (IPEndPoint)from);
-                        nws = client.GetStream();
-                        nws.Write(tmp, 0, tmp.Length);
+                        MessageBox.Show(from.ToString());
                     }
                 }
             }
@@ -141,6 +116,7 @@ namespace DA_RSA
             [DllImport("gdi32.dll")]
             public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
         }
+
         private class User32
         {
             [StructLayout(LayoutKind.Sequential)]
@@ -160,6 +136,7 @@ namespace DA_RSA
             [DllImport("user32.dll")]
             public static extern IntPtr GetWindowRect(IntPtr hWnd, ref RECT rect);
         }
+
         public Image CaptureWindow(IntPtr handle)
         {
             // get te hDC of the target window
@@ -234,11 +211,6 @@ namespace DA_RSA
             UInt32 m;
             UInt32.TryParse("1", out m);
             //WriteReg(m);
-        }
-
-        private void OnAppExit2(object sender, EventArgs e)
-        {
-            
         }
 
         private void SchuelerForm_Load(object sender, EventArgs e)

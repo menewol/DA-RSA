@@ -41,30 +41,7 @@ C:\Users\Jensi\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.GenerateRe
 C:\Users\Jensi\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
 C:\Users\Jensi\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
 C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.BenutzerErstellen.resources
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe.config
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csprojResolveAssemblyReference.cache
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.BenutzerErstellen.resources
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Form1.resources
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.LehrerForm.resources
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Properties.Resources.resources
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.SchuelerForm.resources
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.GenerateResource.Cache
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.pdb
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Data.dll
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Data.Entity.dll
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Web.dll
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
-C:\Users\Drmola\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe.config
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.pdb
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csprojResolveAssemblyReference.cache
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.BenutzerErstellen.resources
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Form1.resources
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.LehrerForm.resources
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Properties.Resources.resources
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.SchuelerForm.resources
-C:\Users\Ayhan Cetin\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.GenerateResource.Cache
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csprojResolveAssemblyReference.cache
+D:\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe.config
+D:\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
+D:\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
