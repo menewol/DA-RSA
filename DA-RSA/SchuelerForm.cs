@@ -23,12 +23,18 @@ namespace DA_RSA
     {
         Thread ListenerThread,ReceiverThread;
         BigInteger N, E;
+        Socket c;
 
         public SchuelerForm()
         {
             InitializeComponent();
             ListenerThread = new Thread(Receive);
             ListenerThread.Start();
+
+            ReceiverThread = new Thread(Receive2);
+            ReceiverThread.Start();
+
+
             OnAppStart();
             Application.ApplicationExit += new EventHandler(this.OnAppExit);
         }
@@ -61,6 +67,28 @@ namespace DA_RSA
             E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
            
+        }
+        public void Receive2()
+        {
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            s.Bind(new IPEndPoint(IPAddress.Any, 8888));
+            s.Listen(100);
+            while (true)
+            {
+                c = s.Accept();
+                byte[] buffer = new byte[2048];
+                try
+                {
+                    int length = c.Receive(buffer);
+                    MessageBox.Show(Encoding.Default.GetString(buffer,0,length));
+                    
+                }
+                catch
+                {
+                   
+                }
+            
+            }
         }
 
         public void doRev(object tmpserver)
