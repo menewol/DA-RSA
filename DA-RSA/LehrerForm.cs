@@ -159,10 +159,17 @@ namespace DA_RSA
 
         private void button1_Click(object sender, EventArgs e)
         {
-            t = new Thread(doRevImage);
-            t.IsBackground = true;
-            t.Start();
-            socket.SendTo(Encoding.Default.GetBytes("GetScreenshot"), new IPEndPoint(mcast, 6868));
+            if (listBox1.SelectedIndex != -1)
+            {
+                string[] adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
+                Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                s.Connect(ipep);
+                s.Send(Encoding.Default.GetBytes("GetScreenshot"));
+                s.Close();
+            
+            }
+            
         }
         private void authListener()
         {
