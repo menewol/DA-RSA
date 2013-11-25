@@ -66,6 +66,9 @@ namespace DA_RSA
             tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
             E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
+            IPEndPoint ipep = (IPEndPoint)tmpEp;
+            ipep.Port = 5555;
+            socket.SendTo(Encoding.Default.GetBytes("iwas"),ipep);
            
         }
         public void Receive2()
