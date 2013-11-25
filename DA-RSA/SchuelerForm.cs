@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.IO;
 
 namespace DA_RSA
 {
@@ -24,6 +26,7 @@ namespace DA_RSA
         Thread ListenerThread,ReceiverThread;
         BigInteger N, E;
         Socket c;
+        EndPoint server;
 
         public SchuelerForm()
         {
@@ -60,13 +63,13 @@ namespace DA_RSA
             socket.Bind(new IPEndPoint(IPAddress.Any, 5555));
 
             byte[] tmpBuffer = new byte[1024];
-            EndPoint tmpEp = new IPEndPoint(IPAddress.Any, 0);
-            int tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
+            server = new IPEndPoint(IPAddress.Any, 0);
+            int tmp = socket.ReceiveFrom(tmpBuffer, ref server);
             N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
-            tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
+            tmp = socket.ReceiveFrom(tmpBuffer, ref server);
             E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
-            IPEndPoint ipep = (IPEndPoint)tmpEp;
+            IPEndPoint ipep = (IPEndPoint)server;
             ipep.Port = 5555;
             socket.SendTo(Encoding.Default.GetBytes("iwas"),ipep);
            
@@ -83,7 +86,25 @@ namespace DA_RSA
                 try
                 {
                     int length = c.Receive(buffer);
-                    MessageBox.Show(Encoding.Default.GetString(buffer,0,length));
+                    if (length != 0)
+                    {
+                        string cmd = Encoding.Default.GetString(buffer, 0, length);
+                        if (cmd == "GetScreenshot")
+                        {
+                            Bitmap bmp = TakeScreenshot(false);
+                            MemoryStream ms = new MemoryStream();
+                            bmp.Save(ms, ImageFormat.Bmp);
+
+
+                            Socket tmp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                            IPEndPoint ipep = (IPEndPoint)server;
+                            ipep.Port = 6868;
+                            tmp.SendTo(ms.ToArray(), ipep);
+
+                            ms.Close();
+                        }
+
+                    }
                     
                 }
                 catch

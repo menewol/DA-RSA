@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -206,7 +207,10 @@ namespace DA_RSA
                 {
                     try
                     {
-                        //screenshot anzeigen
+                        MemoryStream ms = new MemoryStream(buff);
+                        Bitmap bmp = new Bitmap(ms);
+                        pictureBox1.Image = bmp;
+                        ms.Close();
                     }
                     finally
                     {
