@@ -168,7 +168,8 @@ namespace DA_RSA
                 s.Connect(ipep);
                 s.Send(Encoding.Default.GetBytes("GetScreenshot"));
                 s.Close();
-            
+                t = new Thread(doRevImage);
+                t.Start();
             }
             
         }

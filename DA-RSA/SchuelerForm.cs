@@ -92,16 +92,17 @@ namespace DA_RSA
                         if (cmd == "GetScreenshot")
                         {
                             Bitmap bmp = TakeScreenshot(false);
-                            MemoryStream ms = new MemoryStream();
-                            bmp.Save(ms, ImageFormat.Bmp);
+                            //bmp.Save("C:\\bild.png", ImageFormat.Png);
 
 
                             Socket tmp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                            tmp.SendBufferSize = 10485760;
                             IPEndPoint ipep = (IPEndPoint)server;
                             ipep.Port = 6868;
-                            tmp.SendTo(ms.ToArray(), ipep);
+                            byte[] bla = new byte[File.ReadAllBytes("C:\\Users\\schueler\\Desktop\\test.png").Length];
+                            bla = File.ReadAllBytes("C:\\Users\\schueler\\Desktop\\test.png");
+                            tmp.SendTo(Encoding.Default.GetBytes("iwas"), ipep);
 
-                            ms.Close();
                         }
 
                     }
