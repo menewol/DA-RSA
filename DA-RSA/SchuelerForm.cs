@@ -60,40 +60,12 @@ namespace DA_RSA
             tmp = socket.ReceiveFrom(tmpBuffer, ref tmpEp);
             E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
             notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
-            IPEndPoint ipep = (IPEndPoint)tmpEp;
-            ipep.Port = 5555;
-            Socket authSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            authSocket.SendTo(Encoding.Default.GetBytes("blabla"), ipep);
-            ParameterizedThreadStart pts = new ParameterizedThreadStart(doRev);
-            ReceiverThread = new Thread(pts);
-            ReceiverThread.Start(ipep);
-            socket.Close();
-            ListenerThread.Abort();
-
+           
         }
 
         public void doRev(object tmpserver)
         {
-            IPEndPoint server = (IPEndPoint)tmpserver;
-            server.Port = 6868;
-            notifyIcon1.ShowBalloonTip(2000, "Server", tmpserver.ToString() + "||" + server.ToString(), ToolTipIcon.Info);
-            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            socket.Bind(server);
-            byte[] buffer = new byte[1024];
-            int bytes;
-            EndPoint from = new IPEndPoint(IPAddress.Any, 0);
-            while (true)
-            {
-                bytes = socket.ReceiveFrom(buffer, ref from);
-                string cmd = Encoding.Default.GetString(buffer, 0, bytes);
-                if (bytes != 0)
-                {
-                    if (cmd == "GetScreenshot")
-                    {
-                        MessageBox.Show(from.ToString());
-                    }
-                }
-            }
+
         }
 
         private class GDI32

@@ -7,7 +7,6 @@ C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Properties.Res
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.GenerateResource.Cache
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
-C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csprojResolveAssemblyReference.cache
 C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.exe.config
 C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Form1.resources
 C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.LehrerForm.resources
@@ -56,3 +55,5 @@ C:\Users\schueler\Desktop\DA-RSA\DA-RSA\obj\Debug\DA_RSA.LehrerForm.resources
 C:\Users\schueler\Desktop\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Properties.Resources.resources
 C:\Users\schueler\Desktop\DA-RSA\DA-RSA\obj\Debug\DA_RSA.SchuelerForm.resources
 C:\Users\schueler\Desktop\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.GenerateResource.Cache
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Web.dll
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.BenutzerErstellen.resources
