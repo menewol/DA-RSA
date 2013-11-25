@@ -132,6 +132,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "LehrerForm";
             this.Text = "LehrerForm";
+            this.Load += new System.EventHandler(this.LehrerForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);

@@ -57,3 +57,6 @@ C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.SchuelerForm.r
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.GenerateResource.Cache
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
+C:\Users\schueler\Desktop\DA-RSA\DA-RSA\bin\Debug\MySql.Data.dll
+C:\Users\schueler\Desktop\DA-RSA\DA-RSA\bin\Debug\MySql.Data.Entity.dll
+C:\Users\schueler\Desktop\DA-RSA\DA-RSA\bin\Debug\MySql.Web.dll

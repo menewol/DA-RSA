@@ -176,7 +176,11 @@ namespace DA_RSA
                 int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
                 if (anz != 0)
                 {
-                    MessageBox.Show(endp.ToString());
+                    listBox1.Invoke((Action)delegate
+                    {
+                        listBox1.Items.Add(endp.ToString());
+                    });
+    
                 }
             }
         }
@@ -203,6 +207,11 @@ namespace DA_RSA
                     }
                 }
             }
+        }
+
+        private void LehrerForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
