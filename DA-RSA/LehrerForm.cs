@@ -245,7 +245,13 @@ namespace DA_RSA
                 client.Close();
                 listen.Stop();
 
-                pictureBox1.Image = Image.FromFile(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName);
+                //Directory.GetCurrentDirectory() + "\\received Files\\" + fileName
+
+                Form frm = new Form();
+                PictureBox ptb = new PictureBox();
+                ptb.ImageLocation = Directory.GetCurrentDirectory() + "\\received Files\\" + fileName;
+                frm.Controls.Add(ptb);
+                frm.Show();
 
             }
         }
