@@ -204,7 +204,6 @@ namespace DA_RSA
             while (true)
             {
                 listen.Start();
-                Console.WriteLine("Waiting for client to send\r\n");
                 // Accept client
                 client = listen.AcceptTcpClient();
                 netStream = client.GetStream();
@@ -219,7 +218,6 @@ namespace DA_RSA
                 byte[] filename = new byte[tmp];
                 bytesRead = netStream.Read(filename, 0, tmp);
                 string fileName = Encoding.Default.GetString(filename);
-                Console.WriteLine("Receiving file " + fileName + " of " + dataLength.ToString() + " B.\r\n");
 
                 // Read the data
                 int bytesLeft = dataLength;
@@ -230,12 +228,7 @@ namespace DA_RSA
                     bytesRead = netStream.Read(data, allBytesRead, nextPacketSize);
                     allBytesRead += bytesRead;
                     bytesLeft -= bytesRead;
-
-                    Console.Write(bytesLeft.ToString() + " bytes left to receive.                    \r\n");
-                    Console.Write((dataLength - bytesLeft).ToString() + " bytes read.                    \r");
-                    Console.SetCursorPosition(0, Console.CursorTop - 1);
                 }
-                Console.Write("\r\n\r\n");
 
                 if (Directory.Exists(Directory.GetCurrentDirectory() + "\\received Files"))
                 {
@@ -254,7 +247,6 @@ namespace DA_RSA
 
                 pictureBox1.Image = Image.FromFile(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName);
 
-                Console.Write("\r\n");
             }
         }
 
