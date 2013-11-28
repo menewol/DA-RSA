@@ -246,10 +246,11 @@ namespace DA_RSA
                 listen.Stop();
 
                 //Directory.GetCurrentDirectory() + "\\received Files\\" + fileName
-
+                Image img = Image.FromFile(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName);
                 Form frm = new Form();
                 PictureBox ptb = new PictureBox();
-                ptb.ImageLocation = Directory.GetCurrentDirectory() + "\\received Files\\" + fileName;
+                ptb.Size = img.Size;
+                ptb.Image = img; 
                 frm.Controls.Add(ptb);
                 frm.Show();
 
