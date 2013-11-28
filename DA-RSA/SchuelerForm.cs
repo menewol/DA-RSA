@@ -115,7 +115,60 @@ namespace DA_RSA
             
             }
         }
+        public void send_data_sync(object filename, object safefilename, ProgressBar progressbar1)
+        {
+            IPAddress ipAddress = IPAddress.Loopback;
+            int port = 3003;
+            int bufferSize = 4096;
+            TcpClient client = new TcpClient();
+            NetworkStream netStream;
 
+            // Connect to server
+            if (client.Connected != true)
+            {
+                try
+                {
+                    client.Connect(new IPEndPoint(ipAddress, port));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("connection failed: " + ex.Message);
+                }
+            }
+            netStream = client.GetStream();
+
+            // Read bytes from image
+            byte[] data = File.ReadAllBytes((string)filename);
+
+            // Build the package
+            byte[] dataLength = BitConverter.GetBytes(data.Length);
+            string tmp = (string)safefilename;
+            byte[] fileNameLength = BitConverter.GetBytes(tmp.Length);
+            byte[] fileName = Encoding.Default.GetBytes((string)safefilename);
+            byte[] package = new byte[4 + 4 + data.Length + fileName.Length];
+            dataLength.CopyTo(package, 0);
+            fileNameLength.CopyTo(package, 4);
+            fileName.CopyTo(package, 8);
+            data.CopyTo(package, 8 + fileName.Length);
+
+            // Send to server
+            int bytesSent = 0;
+            int bytesLeft = package.Length, datalength = package.Length;
+            while (bytesLeft > 0)
+            {
+
+                int nextPacketSize = (bytesLeft > bufferSize) ? bufferSize : bytesLeft;
+
+                netStream.Write(package, bytesSent, nextPacketSize);
+                bytesSent += nextPacketSize;
+                bytesLeft -= nextPacketSize;
+
+            }
+
+            // Clean up
+            netStream.Close();
+            client.Close();
+        }
         private Bitmap TakeScreenshot(bool onlyForm)
         {
             int StartX, StartY;
