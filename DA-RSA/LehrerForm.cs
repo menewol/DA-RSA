@@ -22,7 +22,12 @@ namespace DA_RSA
         Thread _pThread, _qThread, _eThread, GeneratorThread,t,authThread;
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         IPAddress mcast = IPAddress.Parse("239.255.10.10");
-        List<IPAddress> clients = new List<IPAddress>();
+        List<IPAddress> clients = new List<IPAddress>();  
+        static TcpClient client;
+        static int bufferSize = 1024;
+        static NetworkStream netStream;
+        static int bytesRead = 0;
+        static int allBytesRead = 0;
 
         public LehrerForm()
         {
@@ -195,29 +200,61 @@ namespace DA_RSA
         }
         private void doRevImage()
         {
-            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            s.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            //receive screenshot on port 6868.
-            s.Bind(new IPEndPoint(IPAddress.Any, 6868));
-            byte[] buff = new byte[1024];
-            EndPoint endp = new IPEndPoint(IPAddress.Any, 0);
+            TcpListener listen = new TcpListener(IPAddress.Any,6868);
             while (true)
             {
-                int anz = s.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
-                if (anz != 0)
+                listen.Start();
+                Console.WriteLine("Waiting for client to send\r\n");
+                // Accept client
+                client = listen.AcceptTcpClient();
+                netStream = client.GetStream();
+
+                // Read length of incoming data
+                byte[] length = new byte[8];
+                bytesRead = netStream.Read(length, 0, 8);
+                int dataLength = BitConverter.ToInt32(length, 0);
+                int tmp = BitConverter.ToInt32(length, 4);
+
+                //Read file name.
+                byte[] filename = new byte[tmp];
+                bytesRead = netStream.Read(filename, 0, tmp);
+                string fileName = Encoding.Default.GetString(filename);
+                Console.WriteLine("Receiving file " + fileName + " of " + dataLength.ToString() + " B.\r\n");
+
+                // Read the data
+                int bytesLeft = dataLength;
+                byte[] data = new byte[dataLength];
+                while (bytesLeft > 0)
                 {
-                    try
-                    {
-                        MemoryStream ms = new MemoryStream(buff);
-                        Bitmap bmp = new Bitmap(ms);
-                        pictureBox1.Image = bmp;
-                        ms.Close();
-                    }
-                    finally
-                    {
-                        t.Abort();
-                    }
+                    int nextPacketSize = (bytesLeft > bufferSize) ? bufferSize : bytesLeft;
+                    bytesRead = netStream.Read(data, allBytesRead, nextPacketSize);
+                    allBytesRead += bytesRead;
+                    bytesLeft -= bytesRead;
+
+                    Console.Write(bytesLeft.ToString() + " bytes left to receive.                    \r\n");
+                    Console.Write((dataLength - bytesLeft).ToString() + " bytes read.                    \r");
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
                 }
+                Console.Write("\r\n\r\n");
+
+                if (Directory.Exists(Directory.GetCurrentDirectory() + "\\received Files"))
+                {
+                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName, data);
+                }
+                else
+                {
+                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\received Files");
+                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName, data);
+                }
+
+                // Clean up
+                netStream.Close();
+                client.Close();
+                listen.Stop();
+
+                pictureBox1.Image = Image.FromFile(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName);
+
+                Console.Write("\r\n");
             }
         }
 

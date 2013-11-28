@@ -92,16 +92,13 @@ namespace DA_RSA
                         if (cmd == "GetScreenshot")
                         {
                             Bitmap bmp = TakeScreenshot(false);
-                            //bmp.Save("C:\\bild.png", ImageFormat.Png);
-
-
-                            Socket tmp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-                            tmp.SendBufferSize = 10485760;
+                            bmp.Save("C:\\bild.png", ImageFormat.Png);
                             IPEndPoint ipep = (IPEndPoint)server;
                             ipep.Port = 6868;
-                            byte[] bla = new byte[File.ReadAllBytes("C:\\Users\\schueler\\Desktop\\test.png").Length];
-                            bla = File.ReadAllBytes("C:\\Users\\schueler\\Desktop\\test.png");
-                            tmp.SendTo(Encoding.Default.GetBytes("iwas"), ipep);
+
+                            send_data_sync("C:\\bild.png", "bild.png", ipep.Address, ipep.Port);
+
+                            
 
                         }
 
@@ -115,10 +112,10 @@ namespace DA_RSA
             
             }
         }
-        public void send_data_sync(object filename, object safefilename, ProgressBar progressbar1)
+        public void send_data_sync(object filename, object safefilename, IPAddress sendTO, int portSendTO)
         {
-            IPAddress ipAddress = IPAddress.Loopback;
-            int port = 3003;
+            IPAddress ipAddress = sendTO;
+            int port = portSendTO;
             int bufferSize = 4096;
             TcpClient client = new TcpClient();
             NetworkStream netStream;
