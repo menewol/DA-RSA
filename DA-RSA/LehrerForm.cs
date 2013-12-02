@@ -236,7 +236,6 @@ namespace DA_RSA
                     bytesLeft -= bytesRead;
                 }
                 string[] adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
-                adresse[0].Replace(".", "-");
 
                 if (Directory.Exists(Directory.GetCurrentDirectory() + "\\received Files\\"+adresse[0]))
                 {
