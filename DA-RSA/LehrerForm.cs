@@ -28,6 +28,7 @@ namespace DA_RSA
         static NetworkStream netStream;
         static int bytesRead = 0;
         static int allBytesRead = 0;
+        int i = 0;
 
         public LehrerForm()
         {
@@ -236,12 +237,12 @@ namespace DA_RSA
 
                 if (Directory.Exists(Directory.GetCurrentDirectory() + "\\received Files"))
                 {
-                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName, data);
+                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + i.ToString() + fileName, data);
                 }
                 else
                 {
                     Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\received Files");
-                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName, data);
+                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + i.ToString() + fileName, data);
                 }
 
                 // Clean up
@@ -256,14 +257,18 @@ namespace DA_RSA
                 bytesRead = 0;
                 dataLength = 0;
                 Form frm = new Form();
-                Image img = Image.FromFile(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName);
+                Image img = Image.FromFile(Directory.GetCurrentDirectory() + "\\received Files\\" + i.ToString() + fileName);
                 Bitmap objBitmap = new Bitmap(img, new Size((img.Width / 3) * 2, (img.Height / 3) * 2));
                 PictureBox ptb = new PictureBox();
+                ptb.Width = (img.Width / 3) * 2;
+                ptb.Height = (img.Height / 3) * 2;
                 ptb.Image = objBitmap;
                 frm.Controls.Add(ptb);
-                frm.Width = ((frm.Width / 3) * 2) + 20;
-                frm.Height = ((frm.Height / 3) * 2) + 20;
-                frm.Show();
+                frm.Width = ((img.Width / 3) * 2) + 40;
+                frm.Height = ((img.Height / 3) * 2) + 40;
+                frm.ShowDialog();
+                i++;
+                frm.Close();
                 t.Abort();
             }
         }
