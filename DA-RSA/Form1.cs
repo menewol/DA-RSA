@@ -173,5 +173,13 @@ namespace DA_RSA
         {
             this.Hide();
         }
+
+        private void textBox_pw_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                offlogin();
+            }
+        }
     }
 }

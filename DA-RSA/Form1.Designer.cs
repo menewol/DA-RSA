@@ -81,6 +81,7 @@
             this.textBox_pw.Name = "textBox_pw";
             this.textBox_pw.Size = new System.Drawing.Size(219, 20);
             this.textBox_pw.TabIndex = 4;
+            this.textBox_pw.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_pw_KeyDown);
             // 
             // label_check
             // 
