@@ -27,14 +27,11 @@ namespace DA_RSA
         public Form1()
         {
             InitializeComponent();
-            this.Hide();
             notifyIcon1.Visible = true;
             Application.ApplicationExit += Application_ApplicationExit;
             conn1 = new MySqlConnection(@"server='213.47.71.253';database='rsa';uid='rsa';pwd='rsa'");
-            
-            
         }
-
+        
         void Application_ApplicationExit(object sender, EventArgs e)
         {
             Log.Write();
@@ -88,6 +85,7 @@ namespace DA_RSA
                     LehrerForm lform = new LehrerForm();
                     this.Hide();
                     lform.ShowDialog();
+                    this.Close();
                 }
                 else
                 {
@@ -113,7 +111,8 @@ namespace DA_RSA
                 LehrerForm lform = new LehrerForm();
                 this.Hide();
                 lform.ShowDialog();
-                Close();
+
+                Application.Exit();
             }
             else if (name == "schueler" && pw == "schueler")
             {
@@ -126,7 +125,7 @@ namespace DA_RSA
             {
                 label_check.Text = "falsches PW oder Acc";
             }
-
+            Application.Exit();
         }
 
         static string GetMd5Hash(string input)
@@ -158,7 +157,21 @@ namespace DA_RSA
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.Close();
+            this.Show();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

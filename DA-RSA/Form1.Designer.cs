@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button_login = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -101,7 +102,8 @@
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "RSA wird aufgeführt!";
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
@@ -119,8 +121,11 @@
             this.Controls.Add(this.button_login);
             this.Name = "Form1";
             this.Text = "Login";
+            this.Activated += new System.EventHandler(this.Form1_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
