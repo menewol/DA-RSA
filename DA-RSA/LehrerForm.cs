@@ -266,14 +266,14 @@ namespace DA_RSA
                 bytesRead = 0;
                 dataLength = 0;
                 Form frm = new Form();
-                Image img = Image.FromFile(Directory.GetCurrentDirectory() + "\\received Files\\" + i.ToString() + fileName);
+                Image img = Image.FromFile(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
                 Bitmap objBitmap = new Bitmap(img, new Size((img.Width / 3) * 2, (img.Height / 3) * 2));
                 PictureBox ptb = new PictureBox();
                 ptb.Width = (img.Width / 3) * 2;
                 ptb.Height = (img.Height / 3) * 2;
                 ptb.Image = objBitmap;
                 frm.Controls.Add(ptb);
-                frm.Width = ((img.Width / 3) * 2) + 40;
+                frm.Width = ((img.Width / 3) * 2) + 18;
                 frm.Height = ((img.Height / 3) * 2) + 40;
                 frm.ShowDialog();
                 i++;
