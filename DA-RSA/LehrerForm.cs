@@ -249,13 +249,21 @@ namespace DA_RSA
                 client.Close();
                 listen.Stop();
                 
-                //Directory.GetCurrentDirectory() + "\\received Files\\" + fileName
-                System.Diagnostics.Process.Start(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName);
+                //
+                //System.Diagnostics.Process.Start(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName);
                 allBytesRead = 0;
                 bytesLeft = 0;
                 bytesRead = 0;
                 dataLength = 0;
-
+                Form frm = new Form();
+                Image img = Image.FromFile(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName);
+                Bitmap objBitmap = new Bitmap(img, new Size((img.Width / 3) * 2, (img.Height / 3) * 2));
+                PictureBox ptb = new PictureBox();
+                ptb.Image = objBitmap;
+                frm.Controls.Add(ptb);
+                frm.Width = ((frm.Width / 3) * 2) + 20;
+                frm.Height = ((frm.Height / 3) * 2) + 20;
+                frm.Show();
                 t.Abort();
             }
         }
