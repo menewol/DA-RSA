@@ -235,7 +235,14 @@ namespace DA_RSA
                     allBytesRead += bytesRead;
                     bytesLeft -= bytesRead;
                 }
-                string[] adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+                string[] adresse = new string[0];
+
+                listBox1.Invoke((Action)delegate
+                    {
+                         adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+                    });
+
+                adresse[0].Replace(".", "-");
 
                 if (Directory.Exists(Directory.GetCurrentDirectory() + "\\received Files\\"+adresse[0]))
                 {
@@ -243,7 +250,7 @@ namespace DA_RSA
                 }
                 else
                 {
-                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\received Files" + adresse[0]);
+                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0]);
                     File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName, data);
                 }
 
