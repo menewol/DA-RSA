@@ -29,6 +29,7 @@ namespace DA_RSA
         static int bytesRead = 0;
         static int allBytesRead = 0;
         int i = 0;
+        EndPoint endp;
 
         public LehrerForm()
         {
@@ -187,7 +188,7 @@ namespace DA_RSA
             byte[] buff = new byte[1024];
             while (true)
             {
-                EndPoint endp = new IPEndPoint(IPAddress.Any, 0);
+                endp = new IPEndPoint(IPAddress.Any, 0);
                 int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
                 if (anz != 0)
                 {
@@ -234,15 +235,16 @@ namespace DA_RSA
                     allBytesRead += bytesRead;
                     bytesLeft -= bytesRead;
                 }
+                string[] adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
 
-                if (Directory.Exists(Directory.GetCurrentDirectory() + "\\received Files"))
+                if (Directory.Exists(Directory.GetCurrentDirectory() + "\\received Files\\"+adresse[0]))
                 {
-                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + i.ToString() + fileName, data);
+                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName, data);
                 }
                 else
                 {
-                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\received Files");
-                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + i.ToString() + fileName, data);
+                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\received Files" + adresse[0]);
+                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName, data);
                 }
 
                 // Clean up
