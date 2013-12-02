@@ -201,11 +201,15 @@ namespace DA_RSA
         private void doRevImage()
         {
             TcpListener listen = new TcpListener(IPAddress.Any,6868);
+            listen.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             while (true)
             {
                 listen.Start();
+
                 // Accept client
                 client = listen.AcceptTcpClient();
+                client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
                 netStream = client.GetStream();
 
                 // Read length of incoming data
@@ -244,11 +248,15 @@ namespace DA_RSA
                 netStream.Close();
                 client.Close();
                 listen.Stop();
-
+                
                 //Directory.GetCurrentDirectory() + "\\received Files\\" + fileName
                 System.Diagnostics.Process.Start(Directory.GetCurrentDirectory() + "\\received Files\\" + fileName);
-                
+                allBytesRead = 0;
+                bytesLeft = 0;
+                bytesRead = 0;
+                dataLength = 0;
 
+                t.Abort();
             }
         }
 

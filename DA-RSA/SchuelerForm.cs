@@ -97,13 +97,8 @@ namespace DA_RSA
                             ipep.Port = 6868;
 
                             send_data_sync(Directory.GetCurrentDirectory() + "\\bild.png", "bild.png", ipep.Address, ipep.Port);
-
-                            
-
                         }
-
                     }
-                    
                 }
                 catch
                 {

@@ -27,8 +27,12 @@ namespace DA_RSA
         public Form1()
         {
             InitializeComponent();
+            this.Hide();
+            notifyIcon1.Visible = true;
             Application.ApplicationExit += Application_ApplicationExit;
             conn1 = new MySqlConnection(@"server='213.47.71.253';database='rsa';uid='rsa';pwd='rsa'");
+            
+            
         }
 
         void Application_ApplicationExit(object sender, EventArgs e)
@@ -109,12 +113,14 @@ namespace DA_RSA
                 LehrerForm lform = new LehrerForm();
                 this.Hide();
                 lform.ShowDialog();
+                Close();
             }
             else if (name == "schueler" && pw == "schueler")
             {
                 SchuelerForm sform = new SchuelerForm();
                 this.Hide();
                 sform.ShowDialog();
+                Close();
             }
             else
             {
@@ -150,7 +156,9 @@ namespace DA_RSA
             berst.ShowDialog();
         }
 
-
-
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
