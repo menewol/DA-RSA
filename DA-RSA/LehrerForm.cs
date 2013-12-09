@@ -47,7 +47,7 @@ namespace DA_RSA
         }
         public void BroadCastKeyPair(BigInteger n, BigInteger e)
         {
-            socket.SendTo(Encoding.Default.GetBytes(n.ToString()), new IPEndPoint(mcast, 5555));
+            socket.SendTo(Encoding.Default.GetBytes("a" + n.ToString()), new IPEndPoint(mcast, 5555));
             socket.SendTo(Encoding.Default.GetBytes(e.ToString()), new IPEndPoint(mcast, 5555));
             button1.Invoke((Action)delegate {
                 button1.Enabled = true;
@@ -173,7 +173,7 @@ namespace DA_RSA
                 IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 s.Connect(ipep);
-                s.Send(Encoding.Default.GetBytes("GetScreenshot"));
+                s.Send(Encoding.Default.GetBytes("b"));
                 s.Close();
                 t = new Thread(doRevImage);
                 t.Start();

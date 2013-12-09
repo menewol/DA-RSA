@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
+using System.Net.Sockets;
+using System.Net;
 
 namespace DA_RSA
 {
@@ -76,6 +78,18 @@ namespace DA_RSA
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        public void Receive()
+        {
+
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse("239.255.10.10"), IPAddress.Any));
+            socket.Bind(new IPEndPoint(IPAddress.Any, 5555));
+            while (true)
+            { 
+            //          int anz  = socket.ReceiveFrom( 
+            }
         }
     }
 }

