@@ -125,7 +125,6 @@ namespace DA_RSA
             {
                 label_check.Text = "falsches PW oder Acc";
             }
-            Application.Exit();
         }
 
         static string GetMd5Hash(string input)

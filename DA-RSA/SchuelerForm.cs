@@ -61,21 +61,27 @@ namespace DA_RSA
             socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse("239.255.10.10"), IPAddress.Any));
             socket.Bind(new IPEndPoint(IPAddress.Any, 5555));
-
-            byte[] tmpBuffer = new byte[1024];
             server = new IPEndPoint(IPAddress.Any, 0);
-            int tmp = socket.ReceiveFrom(tmpBuffer, ref server);
-            string cmd = Encoding.Default.GetString(tmpBuffer, 0, 1);
-
-            if (cmd == "a")
+            while (true)
             {
-                N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 1, tmp));
-                int tmp1 = socket.ReceiveFrom(tmpBuffer, ref server);
-                E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp1));
-                notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
-                IPEndPoint ipep = (IPEndPoint)server;
-                ipep.Port = 5555;
-                socket.SendTo(Encoding.Default.GetBytes("iwas"), ipep);
+                byte[] tmpBuffer = new byte[1024];
+                
+                int tmp = socket.ReceiveFrom(tmpBuffer, ref server);
+                //MessageBox.Show(tmp.ToString() + " " + server.ToString());
+
+                string cmd = Encoding.Default.GetString(tmpBuffer, 0, 1);
+
+                if (cmd == "a")
+                {
+                    N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 1, tmp));
+                    int tmp1 = socket.ReceiveFrom(tmpBuffer, ref server);
+                    E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp1));
+                    notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
+                    IPEndPoint ipep = (IPEndPoint)server;
+                    ipep.Port = 5555;
+                    socket.SendTo(Encoding.Default.GetBytes("iwas"), ipep);
+                }
+                
             }
 
         }
