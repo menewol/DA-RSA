@@ -362,7 +362,15 @@ namespace DA_RSA
                 StreamReader srw = new StreamReader(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
 
                 String s = srw.ReadToEnd();
-                MessageBox.Show(s);
+                string[] prozesse = s.Split('\n');
+                foreach (string item in prozesse)
+                {
+                    listBox1.Items.Add(item);
+                }
+                frm.Controls.Add(lsb);
+                frm.ShowDialog();
+                i++;
+                frm.Close();
 
             }
         }
