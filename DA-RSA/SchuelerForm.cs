@@ -130,7 +130,7 @@ namespace DA_RSA
             StreamWriter sw = new StreamWriter(Directory.GetCurrentDirectory() + "\\processe.txt");
             foreach (Process x in p)
             {
-                sw.WriteLine(x.ProcessName + "\t" + x.Id + "\t" + x.TotalProcessorTime+ "\t" + x.WorkingSet64);
+                sw.WriteLine(Convert.ToString(x.ProcessName + "\t" + x.Id + "\t" + x.WorkingSet64));
             }
             sw.Close();
 
