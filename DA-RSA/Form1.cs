@@ -35,6 +35,8 @@ namespace DA_RSA
         void Application_ApplicationExit(object sender, EventArgs e)
         {
             Log.Write();
+            Application.Exit();
+            this.Close();
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -111,8 +113,8 @@ namespace DA_RSA
                 LehrerForm lform = new LehrerForm();
                 this.Hide();
                 lform.ShowDialog();
-
-                Application.Exit();
+                lform.Close();
+                this.Show();
             }
             else if (name == "schueler" && pw == "schueler")
             {

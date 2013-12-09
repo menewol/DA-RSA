@@ -35,15 +35,27 @@ namespace DA_RSA
         {
             InitializeComponent();
             authThread = new Thread(authListener);
+            authThread.IsBackground = true;
             authThread.Start();
             ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
             GeneratorThread = new Thread(pts);
+            GeneratorThread.IsBackground = true;
             GeneratorThread.Start(bitLength);
 
             button1.Enabled = false;
 
+            Application.ApplicationExit += Application_ApplicationExit;
 
+        }
 
+        void Application_ApplicationExit(object sender, EventArgs e)
+        {
+            authThread.Abort();
+            GeneratorThread.Abort();
+            _qThread.Abort();
+            _pThread.Abort();
+            _eThread.Abort();
+            this.Close();
         }
         public void BroadCastKeyPair(BigInteger n, BigInteger e)
         {
@@ -65,6 +77,8 @@ namespace DA_RSA
             q.SetNumber(Generator.Random(numMin, numMax));
             _pThread = new Thread(p.RabinMiller);
             _qThread = new Thread(q.RabinMiller);
+            _pThread.IsBackground = true;
+            _qThread.IsBackground = true;
             DateTime start = DateTime.Now;
             _pThread.Start();
             _qThread.Start();
@@ -111,6 +125,7 @@ namespace DA_RSA
                     e.SetNumber(Generator.Random(2, euler - 1));
                     start = DateTime.Now;
                     _eThread = new Thread(e.RabinMiller);
+                    _eThread.IsBackground = true;
                     _eThread.Start();
 
                     while (_eThread.IsAlive)
@@ -176,6 +191,7 @@ namespace DA_RSA
                 s.Send(Encoding.Default.GetBytes("b"));
                 s.Close();
                 t = new Thread(doRevImage);
+                t.IsBackground = true;
                 t.Start();
             }
             
