@@ -19,7 +19,7 @@ namespace DA_RSA
     {
         int bitLength = 1024;
         BigInteger N, E, D;
-        Thread _pThread, _qThread, _eThread, GeneratorThread,t,authThread;
+        Thread _pThread, _qThread, _eThread, GeneratorThread,t,ProcListener,authThread;
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         IPAddress mcast = IPAddress.Parse("239.255.10.10");
         List<IPAddress> clients = new List<IPAddress>();  
@@ -298,9 +298,86 @@ namespace DA_RSA
             }
         }
 
+        private void doRevProcess()
+        {
+            TcpListener listen = new TcpListener(IPAddress.Any, 6868);
+            listen.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            while (true)
+            {
+                listen.Start();
+
+                // Accept client
+                client = listen.AcceptTcpClient();
+                client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
+                netStream = client.GetStream();
+
+                // Read length of incoming data
+                byte[] length = new byte[8];
+                bytesRead = netStream.Read(length, 0, 8);
+                int dataLength = BitConverter.ToInt32(length, 0);
+                int tmp = BitConverter.ToInt32(length, 4);
+
+                //Read file name.
+                byte[] filename = new byte[tmp];
+                bytesRead = netStream.Read(filename, 0, tmp);
+                string fileName = Encoding.Default.GetString(filename);
+
+                // Read the data
+                int bytesLeft = dataLength;
+                byte[] data = new byte[dataLength];
+                while (bytesLeft > 0)
+                {
+                    int nextPacketSize = (bytesLeft > bufferSize) ? bufferSize : bytesLeft;
+                    bytesRead = netStream.Read(data, allBytesRead, nextPacketSize);
+                    allBytesRead += bytesRead;
+                    bytesLeft -= bytesRead;
+                }
+                string[] adresse = new string[0];
+
+                listBox1.Invoke((Action)delegate
+                    {
+                        adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+                    });
+
+                adresse[0].Replace(".", "-");
+
+                if (Directory.Exists(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0]))
+                {
+                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName, data);
+                }
+                else
+                {
+                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0]);
+                    File.WriteAllBytes(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName, data);
+                }
+
+                // Clean up
+                netStream.Close();
+                client.Close();
+                listen.Stop();
+            }
+        }
+
         private void LehrerForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+             if (listBox1.SelectedIndex != -1)
+            {
+                string[] adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
+                Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                s.Connect(ipep);
+                s.Send(Encoding.Default.GetBytes("c"));
+                s.Close();
+                ProcListener = new Thread(doRevProcess);
+                ProcListener.IsBackground = true;
+                ProcListener.Start();
+            }
         }
     }
 }
