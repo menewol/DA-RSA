@@ -360,13 +360,18 @@ namespace DA_RSA
                 Form frm = new Form();
                 ListBox lsb = new ListBox();
                 StreamReader srw = new StreamReader(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
-
+                DataGridView dgv = new DataGridView();
+                dgv.Size = new Size(frm.Width/100*85,frm.Height/100*85);
                 String s = srw.ReadToEnd();
                 string[] prozesse = s.Split('\n');
-                frm.Controls.Add(lsb);
-                foreach (string item in prozesse)
+                frm.Controls.Add(dgv);
+                dgv.AutoGenerateColumns = true;
+                dgv.Rows.Add(prozesse.Length);
+
+                for (int j = 0; j < prozesse.Length; j++)
                 {
-                           lsb.Items.Add(item);
+                    dgv.Rows[j].Cells[1].Value = prozesse[j].ToString();
+
                 }
                 frm.ShowDialog();
                 i++;
