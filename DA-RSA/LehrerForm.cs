@@ -363,11 +363,11 @@ namespace DA_RSA
 
                 String s = srw.ReadToEnd();
                 string[] prozesse = s.Split('\n');
+                frm.Controls.Add(lsb);
                 foreach (string item in prozesse)
                 {
-                    listBox1.Items.Add(item);
+                           lsb.Items.Add(item);
                 }
-                frm.Controls.Add(lsb);
                 frm.ShowDialog();
                 i++;
                 frm.Close();
