@@ -364,6 +364,10 @@ namespace DA_RSA
                 dgv.Size = new Size(frm.Width/100*85,frm.Height/100*85);
                 String s = srw.ReadToEnd();
                 string[] prozesse = s.Split('\n');
+                DataTable dt = new DataTable("Prozesse");
+                dt.Columns.Add("Prozessname");
+                dt.Columns.Add("Prozess-ID");
+                dt.Columns.Add("Speicherverbrauch");
                 frm.Controls.Add(dgv);
                 dgv.AutoGenerateColumns = true;
                 dgv.Rows.Add(prozesse.Length);
