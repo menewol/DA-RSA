@@ -194,8 +194,7 @@ namespace DA_RSA
                 t = new Thread(doRevImage);
                 t.IsBackground = true;
                 t.Start();
-            }
-            
+            }           
         }
         private void authListener()
         {
@@ -298,7 +297,6 @@ namespace DA_RSA
                 t.Abort();
             }
         }
-
         private void doRevProcess()
         {
             TcpListener listen = new TcpListener(IPAddress.Any, 6868);
