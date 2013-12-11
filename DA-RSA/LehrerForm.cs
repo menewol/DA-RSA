@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Numerics;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -363,25 +364,59 @@ namespace DA_RSA
                 DataGridView dgv = new DataGridView();
                 dgv.Size = new Size(frm.Width/100*85,frm.Height/100*85);
                 String s = srw.ReadToEnd();
-                string[] prozesse = s.Split('\n');
-                DataTable dt = new DataTable("Prozesse");
-                dt.Columns.Add("Prozessname");
-                dt.Columns.Add("Prozess-ID");
-                dt.Columns.Add("Speicherverbrauch");
-                frm.Controls.Add(dgv);
-                dgv.AutoGenerateColumns = true;
-                dgv.Rows.Add(prozesse.Length);
+                DataTable dt = ConvertListToDataTable(RegularWetzer(s));
+                dgv.DataSource = dt;
+                dgv.AllowUserToAddRows = false;
+                dgv.AllowUserToDeleteRows = false;
 
-                for (int j = 0; j < prozesse.Length; j++)
-                {
-                    dgv.Rows[j].Cells[1].Value = prozesse[j].ToString();
-
-                }
                 frm.ShowDialog();
                 i++;
                 frm.Close();
 
             }
+        }
+        static DataTable ConvertListToDataTable(List<string[]> list)
+        {
+            // New table.
+            DataTable table = new DataTable();
+
+            // Get max columns.
+            int columns = 0;
+            foreach (var array in list)
+            {
+                if (array.Length > columns)
+                {
+                    columns = array.Length;
+                }
+            }
+
+            // Add columns.
+            for (int i = 0; i < columns; i++)
+            {
+                table.Columns.Add();
+            }
+
+            // Add rows.
+            foreach (var array in list)
+            {
+                table.Rows.Add(array);
+            }
+
+            return table;
+        }
+        private List<string[]> RegularWetzer(string input)
+        {
+            string s = input;
+            List<string[]> list = new List<string[]>();
+            string pattern2 = "\r\n";
+
+            string[] substrings = Regex.Split(s, pattern2);
+            for (int i = 0; i < substrings.Length; i++)
+            {
+                list.Add(substrings[i].Split('\t'));
+            }
+            list.RemoveAt(list.Count - 1);
+            return list;
         }
 
         private void LehrerForm_Load(object sender, EventArgs e)
