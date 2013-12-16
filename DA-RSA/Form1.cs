@@ -182,5 +182,10 @@ namespace DA_RSA
                 offlogin();
             }
         }
+
+        private void textBox_pw_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

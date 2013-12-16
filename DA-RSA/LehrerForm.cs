@@ -356,20 +356,25 @@ namespace DA_RSA
                 client.Close();
                 listen.Stop();
 
-                Form frm = new Form();
-                ListBox lsb = new ListBox();
+                
                 StreamReader srw = new StreamReader(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
-                DataGridView dgv = new DataGridView();
-                dgv.Size = new Size(frm.Width/100*85,frm.Height/100*85);
                 String s = srw.ReadToEnd();
                 DataTable dt = ConvertListToDataTable(RegularWetzer(s));
-                dgv.DataSource = dt;
-                dgv.AllowUserToAddRows = false;
-                dgv.AllowUserToDeleteRows = false;
+                dgv.Invoke((Action)delegate {
 
-                frm.ShowDialog();
+                    dgv.DataSource = dt;
+                    dgv.AllowUserToAddRows = false;
+                    dgv.AllowUserToDeleteRows = false;
+                    dgv.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
+                    dgv.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+                
+                
+                });
+                
+
+
                 i++;
-                frm.Close();
+                //frm.Close();
 
             }
         }
