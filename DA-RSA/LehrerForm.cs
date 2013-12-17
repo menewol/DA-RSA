@@ -355,7 +355,7 @@ namespace DA_RSA
                 netStream.Close();
                 client.Close();
                 listen.Stop();
-
+                //bullshit
                 
                 StreamReader srw = new StreamReader(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
                 String s = srw.ReadToEnd();
