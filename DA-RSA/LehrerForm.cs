@@ -18,7 +18,7 @@ namespace DA_RSA
 {
     public partial class LehrerForm : Form
     {
-        int bitLength = 1024;
+        int bitLength = 64;
         BigInteger N, E, D;
         Thread _pThread, _qThread, _eThread, GeneratorThread,t,ProcListener,authThread;
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -164,7 +164,7 @@ namespace DA_RSA
                         // D
                         D = d;
 
-                        BroadCastKeyPair(N, E);
+                        BroadCastKeyPair(N, E);                       
                         Log.Add("Successfully created key pair.");
                         
                     }
@@ -360,14 +360,14 @@ namespace DA_RSA
                 StreamReader srw = new StreamReader(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
 
                 String s = srw.ReadToEnd();
-                listBox2.Invoke((Action)delegate
+                listView1.Invoke((Action)delegate
                 {
-                    listBox2.MultiColumn = true;
-                    listBox2.DataSource = RegularWetzer(s);
-                    //foreach (string[] bla in RegularWetzer(s))
-                    //{
-                    //    listBox2.Items.Add(bla[0] + bla[1] + bla[2]);
-                    //}
+
+                  
+                        listView1.FullRowSelect = true;
+                        listView1.Items.Add(new ListViewItem(new string[] { "Name", "Address" }));
+                          
+                    
                     
 
                 });
