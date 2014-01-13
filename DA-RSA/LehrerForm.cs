@@ -31,6 +31,7 @@ namespace DA_RSA
         static int allBytesRead = 0;
         int i = 0;
         EndPoint endp;
+        string[] adresse;
 
         public LehrerForm()
         {
@@ -185,7 +186,7 @@ namespace DA_RSA
         {
             if (listBox1.SelectedIndex != -1)
             {
-                string[] adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+                adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
                 IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 s.Connect(ipep);
@@ -364,6 +365,7 @@ namespace DA_RSA
                 {
                     listView1.FullRowSelect = true;
                     listView1.AutoArrange = false;
+                    listView1.MultiSelect = false;
                     listView1.View = View.Details;
                     foreach (string[] item in RegularWetzer(s))
                     {
@@ -443,6 +445,24 @@ namespace DA_RSA
                 ProcListener.IsBackground = true;
                 ProcListener.Start();
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            int tmpID=0;
+
+            if (listView1.SelectedItems.Count > 0)
+            {
+                ListView.SelectedListViewItemCollection process = this.listView1.SelectedItems;
+                foreach (ListViewItem item in process)
+                {
+                    tmpID = Convert.ToInt32(item.SubItems[1].Text);
+                }  
+            }
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            s.Connect(ipep);
+            s.Send(Encoding.Default.GetBytes("d"+tmpID.ToString()));
         }
     }
 }

