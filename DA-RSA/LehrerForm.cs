@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -464,5 +465,17 @@ namespace DA_RSA
             s.Connect(ipep);
             s.Send(Encoding.Default.GetBytes("d"+tmpID.ToString()));
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SendMessage(textBox1.Handle, 0x1501, 1, "Titel.");
+            SendMessage(textBox2.Handle, 0x1501, 1, "Message.");
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            s.Connect(ipep);
+            s.Send(Encoding.Default.GetBytes("e" + textBox1.Text+":"+textBox2.Text));
+        }
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
     }
 }
