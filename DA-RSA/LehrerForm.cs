@@ -358,9 +358,19 @@ namespace DA_RSA
                 //bullshit
                 
                 StreamReader srw = new StreamReader(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
+
                 String s = srw.ReadToEnd();
-                listBox1.MultiColumn = true;
-                listBox2.Items.Add(s);
+                listBox2.Invoke((Action)delegate
+                {
+                    listBox2.MultiColumn = true;
+                    listBox2.DataSource = RegularWetzer(s);
+                    //foreach (string[] bla in RegularWetzer(s))
+                    //{
+                    //    listBox2.Items.Add(bla[0] + bla[1] + bla[2]);
+                    //}
+                    
+
+                });
                 
 
 
