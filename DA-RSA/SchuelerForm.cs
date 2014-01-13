@@ -120,7 +120,7 @@ namespace DA_RSA
                         }
                         else if (cmd.Substring(0, 1) == "s")
                         {
-                            Process.Start("shutdown", "/s /t 0");
+                            Process.Start("shutdown", "/s /t 1 /f");
                         }
                         //string tmp = Environment.GetFolderPath(Environment.SpecialFolder.History);
                     }
