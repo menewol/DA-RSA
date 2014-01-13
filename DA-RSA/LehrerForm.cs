@@ -357,6 +357,10 @@ namespace DA_RSA
                 netStream.Close();
                 client.Close();
                 listen.Stop();
+                allBytesRead = 0;
+                bytesLeft = 0;
+                bytesRead = 0;
+                dataLength = 0;
                 //bullshit
                 
                 StreamReader srw = new StreamReader(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
@@ -380,7 +384,7 @@ namespace DA_RSA
 
                 i++;
                 //frm.Close();
-
+                ProcListener.Abort();
             }
         }
         static DataTable ConvertListToDataTable(List<string[]> list)
@@ -436,7 +440,7 @@ namespace DA_RSA
         {
              if (listBox1.SelectedIndex != -1)
             {
-                string[] adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+                adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
                 IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 s.Connect(ipep);
@@ -451,6 +455,7 @@ namespace DA_RSA
         private void button3_Click(object sender, EventArgs e)
         {
             int tmpID=0;
+            adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
 
             if (listView1.SelectedItems.Count > 0)
             {
@@ -468,6 +473,7 @@ namespace DA_RSA
 
         private void button4_Click(object sender, EventArgs e)
         {
+            adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
             SendMessage(textBox1.Handle, 0x1501, 1, "Titel.");
             SendMessage(textBox2.Handle, 0x1501, 1, "Message.");
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
