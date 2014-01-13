@@ -359,17 +359,8 @@ namespace DA_RSA
                 
                 StreamReader srw = new StreamReader(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
                 String s = srw.ReadToEnd();
-                DataTable dt = ConvertListToDataTable(RegularWetzer(s));
-                dgv.Invoke((Action)delegate {
-
-                    dgv.DataSource = dt;
-                    dgv.AllowUserToAddRows = false;
-                    dgv.AllowUserToDeleteRows = false;
-                    dgv.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
-                    dgv.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-                
-                
-                });
+                listBox1.MultiColumn = true;
+                listBox2.Items.Add(s);
                 
 
 
