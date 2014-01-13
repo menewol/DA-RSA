@@ -362,13 +362,14 @@ namespace DA_RSA
                 String s = srw.ReadToEnd();
                 listView1.Invoke((Action)delegate
                 {
-
-                  
-                        listView1.FullRowSelect = true;
-                        listView1.Items.Add(new ListViewItem(new string[] { "Name", "Address" }));
-                          
-                    
-                    
+                    listView1.FullRowSelect = true;
+                    listView1.AutoArrange = false;
+                    listView1.View = View.Details;
+                    foreach (string[] item in RegularWetzer(s))
+                    {
+                        ListViewItem lsv = new ListViewItem(item);
+                        listView1.Items.Add(lsv);
+                    }
 
                 });
                 
