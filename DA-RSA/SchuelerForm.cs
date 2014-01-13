@@ -33,7 +33,7 @@ namespace DA_RSA
             InitializeComponent();
             ListenerThread = new Thread(Receive);
             ListenerThread.Start();
-
+            notifyIcon_rsa.Visible = true;
             ReceiverThread = new Thread(Receive2);
             ReceiverThread.Start();
 
@@ -69,7 +69,7 @@ namespace DA_RSA
                     N = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 1, tmp));
                     int tmp1 = socket.ReceiveFrom(tmpBuffer, ref server);
                     E = BigInteger.Parse(Encoding.Default.GetString(tmpBuffer, 0, tmp1));
-                    notifyIcon1.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
+                    notifyIcon_rsa.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
                     IPEndPoint ipep = (IPEndPoint)server;
                     ipep.Port = 5555;
                     socket.SendTo(Encoding.Default.GetBytes("iwas"), ipep);
@@ -116,7 +116,11 @@ namespace DA_RSA
                         else if (cmd.Substring(0,1) == "e")
                         {
                             string[] msg = cmd.Substring(1).Split(':');
-                            notifyIcon1.ShowBalloonTip(20000, msg[0], msg[1], ToolTipIcon.Info);
+                            notifyIcon_rsa.ShowBalloonTip(20000, msg[0], msg[1], ToolTipIcon.Info);
+                        }
+                        else if (cmd.Substring(0, 1) == "s")
+                        {
+                            Process.Start("shutdown", "/s /t 0");
                         }
                         //string tmp = Environment.GetFolderPath(Environment.SpecialFolder.History);
                     }
@@ -265,7 +269,7 @@ namespace DA_RSA
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
+            MessageBox.Show("LALALA");
         }
         //CaptureScreenToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bild.png", ImageFormat.Png);
     }

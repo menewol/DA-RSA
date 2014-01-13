@@ -493,5 +493,21 @@ namespace DA_RSA
         }
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex != -1)
+            {
+                adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
+                Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                s.Connect(ipep);
+                s.Send(Encoding.Default.GetBytes("s"));
+            }
+            else
+            {
+                MessageBox.Show("Sie müssen einen Client auswählen.");
+            }
+        }
     }
 }
