@@ -116,7 +116,7 @@ namespace DA_RSA
                         else if (cmd.Substring(0,1) == "e")
                         {
                             string[] msg = cmd.Substring(1).Split(':');
-                            notifyIcon1.ShowBalloonTip(2000, msg[0], msg[1], ToolTipIcon.Info);
+                            notifyIcon1.ShowBalloonTip(20000, msg[0], msg[1], ToolTipIcon.Info);
                         }
                         //string tmp = Environment.GetFolderPath(Environment.SpecialFolder.History);
                     }
