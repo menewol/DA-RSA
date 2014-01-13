@@ -49,6 +49,9 @@ namespace DA_RSA
 
             Application.ApplicationExit += Application_ApplicationExit;
 
+            SendMessage(textBox1.Handle, 0x1501, 1, "Titel.");
+            SendMessage(textBox2.Handle, 0x1501, 1, "Message.");
+
         }
 
         void Application_ApplicationExit(object sender, EventArgs e)
@@ -473,13 +476,20 @@ namespace DA_RSA
 
         private void button4_Click(object sender, EventArgs e)
         {
-            adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
-            SendMessage(textBox1.Handle, 0x1501, 1, "Titel.");
-            SendMessage(textBox2.Handle, 0x1501, 1, "Message.");
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
-            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            s.Connect(ipep);
-            s.Send(Encoding.Default.GetBytes("e" + textBox1.Text+":"+textBox2.Text));
+
+            if (listBox1.SelectedIndex != -1)
+            {
+                adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
+                Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                s.Connect(ipep);
+                s.Send(Encoding.Default.GetBytes("e" + textBox1.Text + ":" + textBox2.Text));
+            }
+            else
+            {
+                MessageBox.Show("Sie müssen einen Client auswählen.");
+            }
+            
         }
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
