@@ -38,11 +38,10 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.dgv = new System.Windows.Forms.DataGridView();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -97,7 +96,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.dgv);
+            this.tabPage2.Controls.Add(this.listBox2);
             this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.listBox1);
@@ -137,13 +136,13 @@
             this.listBox1.Size = new System.Drawing.Size(206, 472);
             this.listBox1.TabIndex = 0;
             // 
-            // dgv
+            // listBox2
             // 
-            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv.Location = new System.Drawing.Point(686, 6);
-            this.dgv.Name = "dgv";
-            this.dgv.Size = new System.Drawing.Size(256, 472);
-            this.dgv.TabIndex = 3;
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(686, 7);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(265, 472);
+            this.listBox2.TabIndex = 3;
             // 
             // LehrerForm
             // 
@@ -160,7 +159,6 @@
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,6 +176,6 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridView dgv;
+        private System.Windows.Forms.ListBox listBox2;
     }
 }
