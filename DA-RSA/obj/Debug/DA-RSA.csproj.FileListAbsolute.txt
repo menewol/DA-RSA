@@ -91,3 +91,4 @@ C:\Users\schueler\Desktop\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.SchuelerForm.res
 C:\Users\schueler\Desktop\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csproj.GenerateResource.Cache
 C:\Users\schueler\Desktop\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
 C:\Users\schueler\Desktop\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
+C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Blacklist.resources

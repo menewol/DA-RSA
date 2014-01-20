@@ -373,6 +373,7 @@ namespace DA_RSA
                 String s = srw.ReadToEnd();
                 listView1.Invoke((Action)delegate
                 {
+                    listView1.Items.Clear();
                     listView1.FullRowSelect = true;
                     listView1.AutoArrange = false;
                     listView1.MultiSelect = false;
@@ -443,6 +444,7 @@ namespace DA_RSA
 
         private void button2_Click(object sender, EventArgs e)
         {
+
              if (listBox1.SelectedIndex != -1)
             {
                 adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
@@ -474,6 +476,7 @@ namespace DA_RSA
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             s.Connect(ipep);
             s.Send(Encoding.Default.GetBytes("d"+tmpID.ToString()));
+            s.Send(Encoding.Default.GetBytes("c"));
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -524,7 +527,7 @@ namespace DA_RSA
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            label1.Text = "Anzahl verwaltbarer Rechner: ";
+            label1.Text = "Anzahl verwaltbarer Rechner: " + clList.Count.ToString();
         }
     }
 }
