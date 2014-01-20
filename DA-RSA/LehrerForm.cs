@@ -212,7 +212,8 @@ namespace DA_RSA
             {
                 endp = new IPEndPoint(IPAddress.Any, 0);
                 int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
-                clList.Add((IPEndPoint)endp);
+
+
                 if (anz != 0)
                 {
                     listBox1.Invoke((Action)delegate
