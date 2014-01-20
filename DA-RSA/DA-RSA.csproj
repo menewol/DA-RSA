@@ -55,6 +55,12 @@
     <Compile Include="BenutzerErstellen.Designer.cs">
       <DependentUpon>BenutzerErstellen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Blacklist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Blacklist.Designer.cs">
+      <DependentUpon>Blacklist.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     </Compile>
     <EmbeddedResource Include="BenutzerErstellen.resx">
       <DependentUpon>BenutzerErstellen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Blacklist.resx">
+      <DependentUpon>Blacklist.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
