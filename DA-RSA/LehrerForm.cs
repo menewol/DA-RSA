@@ -33,6 +33,7 @@ namespace DA_RSA
         int i = 0;
         EndPoint endp;
         string[] adresse;
+        List<IPEndPoint> clList = new List<IPEndPoint>();
 
         public LehrerForm()
         {
@@ -70,7 +71,7 @@ namespace DA_RSA
             button1.Invoke((Action)delegate {
                 button1.Enabled = true;
             });
-        }
+        } 
         public void GenerateKeyPair(object TEMPbitLength)
         {
             int bitLength = (int)TEMPbitLength;
@@ -211,6 +212,7 @@ namespace DA_RSA
             {
                 endp = new IPEndPoint(IPAddress.Any, 0);
                 int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
+                clList.Add((IPEndPoint)endp);
                 if (anz != 0)
                 {
                     listBox1.Invoke((Action)delegate
@@ -508,6 +510,21 @@ namespace DA_RSA
             {
                 MessageBox.Show("Sie müssen einen Client auswählen.");
             }
+        }
+
+        private void bearbeitenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rechnerSuchenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BroadCastKeyPair(N, E);
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            label1.Text = "Anzahl verwaltbarer Rechner: ";
         }
     }
 }
