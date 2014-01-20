@@ -74,7 +74,6 @@ namespace DA_RSA
                     ipep.Port = 5555;
                     socket.SendTo(Encoding.Default.GetBytes("iwas"), ipep);
                 }
-                
             }
 
         }
