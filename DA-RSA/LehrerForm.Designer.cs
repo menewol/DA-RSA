@@ -31,9 +31,12 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bearbeitenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rechnerSuchenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Gesamtübersicht = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button5 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -47,9 +50,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.rechnerSuchenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Gesamtübersicht = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.button_bl = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -83,6 +84,13 @@
             this.bearbeitenToolStripMenuItem.Text = "Bearbeiten";
             this.bearbeitenToolStripMenuItem.Click += new System.EventHandler(this.bearbeitenToolStripMenuItem_Click);
             // 
+            // rechnerSuchenToolStripMenuItem
+            // 
+            this.rechnerSuchenToolStripMenuItem.Name = "rechnerSuchenToolStripMenuItem";
+            this.rechnerSuchenToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.rechnerSuchenToolStripMenuItem.Text = "Rechner suchen...";
+            this.rechnerSuchenToolStripMenuItem.Click += new System.EventHandler(this.rechnerSuchenToolStripMenuItem_Click);
+            // 
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
@@ -115,8 +123,28 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 49);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(147, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Anzahl verwaltbarer Rechner:";
+            // 
+            // Gesamtübersicht
+            // 
+            this.Gesamtübersicht.AutoSize = true;
+            this.Gesamtübersicht.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Gesamtübersicht.Location = new System.Drawing.Point(6, 14);
+            this.Gesamtübersicht.Name = "Gesamtübersicht";
+            this.Gesamtübersicht.Size = new System.Drawing.Size(146, 20);
+            this.Gesamtübersicht.TabIndex = 0;
+            this.Gesamtübersicht.Text = "Gesamtübersicht";
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button_bl);
             this.tabPage2.Controls.Add(this.button5);
             this.tabPage2.Controls.Add(this.textBox2);
             this.tabPage2.Controls.Add(this.textBox1);
@@ -234,31 +262,15 @@
             this.listBox1.Size = new System.Drawing.Size(206, 472);
             this.listBox1.TabIndex = 0;
             // 
-            // rechnerSuchenToolStripMenuItem
+            // button_bl
             // 
-            this.rechnerSuchenToolStripMenuItem.Name = "rechnerSuchenToolStripMenuItem";
-            this.rechnerSuchenToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.rechnerSuchenToolStripMenuItem.Text = "Rechner suchen...";
-            this.rechnerSuchenToolStripMenuItem.Click += new System.EventHandler(this.rechnerSuchenToolStripMenuItem_Click);
-            // 
-            // Gesamtübersicht
-            // 
-            this.Gesamtübersicht.AutoSize = true;
-            this.Gesamtübersicht.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Gesamtübersicht.Location = new System.Drawing.Point(6, 14);
-            this.Gesamtübersicht.Name = "Gesamtübersicht";
-            this.Gesamtübersicht.Size = new System.Drawing.Size(146, 20);
-            this.Gesamtübersicht.TabIndex = 0;
-            this.Gesamtübersicht.Text = "Gesamtübersicht";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 49);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(147, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Anzahl verwaltbarer Rechner:";
+            this.button_bl.Location = new System.Drawing.Point(7, 124);
+            this.button_bl.Name = "button_bl";
+            this.button_bl.Size = new System.Drawing.Size(75, 23);
+            this.button_bl.TabIndex = 9;
+            this.button_bl.Text = "Blacklist";
+            this.button_bl.UseVisualStyleBackColor = true;
+            this.button_bl.Click += new System.EventHandler(this.button_bl_Click);
             // 
             // LehrerForm
             // 
@@ -307,5 +319,6 @@
         private System.Windows.Forms.ToolStripMenuItem rechnerSuchenToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label Gesamtübersicht;
+        private System.Windows.Forms.Button button_bl;
     }
 }

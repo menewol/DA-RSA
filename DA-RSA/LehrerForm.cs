@@ -529,5 +529,12 @@ namespace DA_RSA
         {
             label1.Text = "Anzahl verwaltbarer Rechner: " + clList.Count.ToString();
         }
+
+        private void button_bl_Click(object sender, EventArgs e)
+        {
+            //Blacklist
+            Blacklist bl = new Blacklist();
+            bl.ShowDialog();
+        }
     }
 }
