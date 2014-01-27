@@ -76,7 +76,7 @@ namespace DA_RSA
                 }
                 else if (cmd == "f")
                 {
-                    string s = Encoding.Default.GetString(tmpBuffer, 1, tmpBuffer.Length);
+                    string s = Encoding.Default.GetString(tmpBuffer, 1, tmpBuffer.Length - 1);
                     string[] blacklist = s.Split(';');
                     ParameterizedThreadStart pts = new ParameterizedThreadStart(blacklisten);
                     BlThread = new Thread(pts);
@@ -162,16 +162,36 @@ namespace DA_RSA
             {
                 Process[] p = Process.GetProcesses();
 
-                foreach (Process x in p)
+                //foreach (Process x in p)
+                //{
+                //    for (int i = 0; i < bl.Length; i++)
+                //    {
+                //        if (x.ProcessName == bl[i])
+                //        {
+                //            x.Kill();
+                //            break;
+                //        }
+                //    }
+                //}
+                foreach (string s in bl)
                 {
-                    for (int i = 0; i < bl.Length; i++)
+                    foreach (Process x in p)
                     {
-                        if (x.ProcessName == bl[i])
+                        if (s == x.ProcessName)
                         {
-                            x.Kill();
-                            break;
+                            try
+                            {
+                                x.Kill();
+                                break;
+                            }
+                            catch (Exception)
+                            {
+                                break;
+                            }
                         }
                     }
+
+                    p = Process.GetProcesses();
                 }
             }
         }
