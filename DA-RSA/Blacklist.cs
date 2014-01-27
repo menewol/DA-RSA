@@ -43,8 +43,6 @@ namespace DA_RSA
 
         private void Blacklist_Load(object sender, EventArgs e)
         {
-            conn1.Open();
-
             read();
         }
 
