@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace DA_RSA
 {
@@ -34,6 +35,7 @@ namespace DA_RSA
         EndPoint endp;
         string[] adresse;
         List<IPEndPoint> clList = new List<IPEndPoint>();
+        MySqlConnection conn;
 
         public LehrerForm()
         {
@@ -53,6 +55,16 @@ namespace DA_RSA
             SendMessage(textBox1.Handle, 0x1501, 1, "Titel.");
             SendMessage(textBox2.Handle, 0x1501, 1, "Message.");
 
+            try
+            {
+                conn = new MySqlConnection(@"server='127.0.0.1';database='rsa_daten';uid='root';pwd=''");
+                conn.Open();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Datenbankverbindung konnte nicht aufgebaut werden!");
+                throw;
+            }
         }
 
         void Application_ApplicationExit(object sender, EventArgs e)
@@ -534,8 +546,24 @@ namespace DA_RSA
         private void button_bl_Click(object sender, EventArgs e)
         {
             //Blacklist
-            Blacklist bl = new Blacklist();
+            Blacklist bl = new Blacklist(conn);
             bl.ShowDialog();
+        }
+
+        private void button_sbl_Click(object sender, EventArgs e)
+        {
+            //starten der Blacklist
+            string s = "f";
+            MySqlCommand cmd = new MySqlCommand("SELECT Prozess FROM blacklist;", conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                s += rdr[0].ToString() + ";";
+            }
+            rdr.Close();
+            
+            socket.SendTo(Encoding.Default.GetBytes(s), new IPEndPoint(mcast, 5555));
         }
     }
 }

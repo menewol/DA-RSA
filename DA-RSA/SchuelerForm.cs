@@ -23,7 +23,7 @@ namespace DA_RSA
 {
     public partial class SchuelerForm : Form
     {
-        Thread ListenerThread,ReceiverThread;
+        Thread ListenerThread,ReceiverThread,BlThread;
         BigInteger N, E;
         Socket c;
         EndPoint server;
@@ -38,8 +38,8 @@ namespace DA_RSA
             ReceiverThread.Start();
 
 
-            OnAppStart();
-            Application.ApplicationExit += new EventHandler(this.OnAppExit);
+            //OnAppStart();
+            //Application.ApplicationExit += new EventHandler(this.OnAppExit);
         }
 
         private void SchuelerForm_Shown(object sender, EventArgs e)
@@ -73,6 +73,14 @@ namespace DA_RSA
                     IPEndPoint ipep = (IPEndPoint)server;
                     ipep.Port = 5555;
                     socket.SendTo(Encoding.Default.GetBytes("iwas"), ipep);
+                }
+                else if (cmd == "f")
+                {
+                    string s = Encoding.Default.GetString(tmpBuffer, 1, tmpBuffer.Length);
+                    string[] blacklist = s.Split(';');
+                    ParameterizedThreadStart pts = new ParameterizedThreadStart(blacklisten);
+                    BlThread = new Thread(pts);
+                    BlThread.Start(blacklist);
                 }
             }
 
@@ -145,6 +153,29 @@ namespace DA_RSA
 
             send_data_sync(Directory.GetCurrentDirectory() + "\\processe.txt", "processe.txt", ip, i);
         }
+
+        public void blacklisten(object o)
+        {
+            string[] bl = (string[])o;
+
+            while (true)
+            {
+                Process[] p = Process.GetProcesses();
+
+                foreach (Process x in p)
+                {
+                    for (int i = 0; i < bl.Length; i++)
+                    {
+                        if (x.ProcessName == bl[i])
+                        {
+                            x.Kill();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         public void send_data_sync(object filename, object safefilename, IPAddress sendTO, int portSendTO)
         {
             IPAddress ipAddress = sendTO;

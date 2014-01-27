@@ -16,11 +16,11 @@ namespace DA_RSA
         MySqlConnection conn1;
         string scmd = "";
 
-        public Blacklist()
+        public Blacklist(MySqlConnection c)
         {
             InitializeComponent();
             //conn1 = new MySqlConnection(@"server='213.47.71.253';database='rsa';uid='rsa';pwd='rsa'");
-            conn1 = new MySqlConnection(@"server='127.0.0.1';database='rsa_daten';uid='root';pwd=''");
+            conn1 = c;
         }
 
         private void button_hin_Click(object sender, EventArgs e)
