@@ -20,7 +20,7 @@ namespace DA_RSA
 {
     public partial class LehrerForm : Form
     {
-        int bitLength = 32;
+        int bitLength = 512;
         BigInteger N, E, D;
         Thread _pThread, _qThread, _eThread, GeneratorThread,t,ProcListener,authThread;
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -63,7 +63,7 @@ namespace DA_RSA
             catch (Exception)
             {
                 MessageBox.Show("Datenbankverbindung konnte nicht aufgebaut werden!");
-                throw;
+                //throw;
             }
         }
 
@@ -182,15 +182,15 @@ namespace DA_RSA
                         // D
                         D = d;
                         
-                        byte[] buf = Encoding.Default.GetBytes("abcd");
+                        //byte[] buf = Encoding.Default.GetBytes("abcd");
 
-                        //BroadCastKeyPair(N, E);                       
+                        BroadCastKeyPair(N, E);                       
                         
-                        BigInteger m = BitConverter.ToInt64(buf,0);
-                        BigInteger c = BigInteger.ModPow(m, D, N);
-                        BigInteger f = BigInteger.ModPow(E, m, N);
-
-                        MessageBox.Show(c.ToString() + " = " + f.ToString());
+                        //BigInteger m = BitConverter.ToInt64(buf,0);
+                        //BigInteger c = BigInteger.ModPow(m, D, N);
+                        //BigInteger f = BigInteger.ModPow(E, m, N);
+                        //MessageBox.Show(c.ToString() + " = " + f.ToString());
+                        
                         Log.Add("Successfully created key pair.");
                     }
                     else
@@ -231,7 +231,9 @@ namespace DA_RSA
             {
                 endp = new IPEndPoint(IPAddress.Any, 0);
                 int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
-
+                string temp = Encoding.Default.GetString(buff, 0, anz);
+                temp += "\r\n" + Decrypt(temp);
+                MessageBox.Show(temp);
 
                 if (anz != 0)
                 {
@@ -572,5 +574,114 @@ namespace DA_RSA
             
             socket.SendTo(Encoding.Default.GetBytes(s), new IPEndPoint(mcast, 5555));
         }
+
+        private string Encrypt(string SrcText)
+        {
+            string tempOutput = null;
+            try
+            {
+                BigInteger e = E;
+                BigInteger n = N;
+
+                if (SrcText.Length > n)
+                {
+                    MessageBox.Show("Cannot encrypt data longer than: " + n + "\r\n\r\nUse key pair of bigger length.",
+                                    "Error");
+
+                    return null;
+                }
+
+                if (SrcText.Length == 0)
+                {
+                    return null;
+                }
+
+                tempOutput = BigInteger.ModPow(SrcText.Length, e, n).ToString();
+
+                for (int i = 0; i < SrcText.Length; i++)
+                {
+                    char chr = SrcText[i];
+
+                    BigInteger c = BigInteger.ModPow(Convert.ToInt32(chr), e, n);
+
+                    if (tempOutput == "")
+                    {
+                        tempOutput = c.ToString();
+                    }
+                    else
+                    {
+                        tempOutput += " " + c.ToString();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Enter valid public key components to encrypt.", "Error");
+            }
+            return tempOutput;
+        }
+
+        private string Decrypt(string CipherText)
+        {
+            string tempOutput = null;
+            if (CipherText.Length == 0)
+            {
+                return null;
+            }
+
+            try
+            {
+                BigInteger d = D;
+                BigInteger n = N;
+
+                string text = "";
+
+                try
+                {
+                    string[] cipher = CipherText.Split(' ');
+
+                    BigInteger m = BigInteger.ModPow(BigInteger.Parse(cipher[0]), d, n);
+
+                    if (cipher.Length == 1)
+                    {
+                        tempOutput = m.ToString();
+                    }
+                    else
+                    {
+                        BigInteger length = m;
+
+                        for (int i = 1; i < cipher.Length; i++)
+                        {
+                            m = BigInteger.ModPow(BigInteger.Parse(cipher[i]), d, n);
+
+                            //M = (M % (BigInteger.Pow(2, 31)));
+
+                            char chr = Convert.ToChar(Convert.ToInt32(m.ToString()));
+
+                            text += chr;
+                        }
+
+                        if (length == text.Length)
+                        {
+                            tempOutput = text;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error decrypting: incomplete message.", "Error");
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error decrypting, invalid private key.", "Error");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Enter valid private key components to decrypt.", "Error");
+            }
+            return tempOutput;
+        }
+
     }
 }

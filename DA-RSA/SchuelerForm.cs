@@ -72,7 +72,7 @@ namespace DA_RSA
                     notifyIcon_rsa.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
                     IPEndPoint ipep = (IPEndPoint)server;
                     ipep.Port = 5555;
-                    socket.SendTo(Encoding.Default.GetBytes("iwas"), ipep);
+                    socket.SendTo(Encoding.Default.GetBytes(Encrypt("iwas")), ipep);
                 }
                 else if (cmd == "f")
                 {
@@ -322,5 +322,114 @@ namespace DA_RSA
             MessageBox.Show("LALALA");
         }
         //CaptureScreenToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bild.png", ImageFormat.Png);
+        private string Encrypt(string SrcText)
+        {
+            string tempOutput = null;
+            try
+            {
+                BigInteger e = E;
+                BigInteger n = N;
+
+                if (SrcText.Length > n)
+                {
+                    MessageBox.Show("Cannot encrypt data longer than: " + n + "\r\n\r\nUse key pair of bigger length.",
+                                    "Error");
+
+                    return null;
+                }
+
+                if (SrcText.Length == 0)
+                {
+                    return null;
+                }
+
+                tempOutput = BigInteger.ModPow(SrcText.Length, e, n).ToString();
+
+                for (int i = 0; i < SrcText.Length; i++)
+                {
+                    char chr = SrcText[i];
+
+                    BigInteger c = BigInteger.ModPow(Convert.ToInt32(chr), e, n);
+
+                    if (tempOutput == "")
+                    {
+                        tempOutput = c.ToString();
+                    }
+                    else
+                    {
+                        tempOutput += " " + c.ToString();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Enter valid public key components to encrypt.", "Error");
+            }
+            return tempOutput;
+        }
+
+        private string Decrypt(string CipherText)
+        {
+            string tempOutput = null;
+            if (CipherText.Length == 0)
+            {
+                return null;
+            }
+
+            try
+            {
+                BigInteger d = 0;
+                BigInteger n = N;
+
+                string text = "";
+
+                try
+                {
+                    string[] cipher = CipherText.Split(' ');
+
+                    BigInteger m = BigInteger.ModPow(BigInteger.Parse(cipher[0]), d, n);
+
+                    if (cipher.Length == 1)
+                    {
+                        tempOutput = m.ToString();
+                    }
+                    else
+                    {
+                        BigInteger length = m;
+
+                        for (int i = 1; i < cipher.Length; i++)
+                        {
+                            m = BigInteger.ModPow(BigInteger.Parse(cipher[i]), d, n);
+
+                            //M = (M % (BigInteger.Pow(2, 31)));
+
+                            char chr = Convert.ToChar(Convert.ToInt32(m.ToString()));
+
+                            text += chr;
+                        }
+
+                        if (length == text.Length)
+                        {
+                            tempOutput = text;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error decrypting: incomplete message.", "Error");
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error decrypting, invalid private key.", "Error");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Enter valid private key components to decrypt.", "Error");
+            }
+            return tempOutput;
+        }
+
+
     }
 }

@@ -67,7 +67,6 @@ C:\Users\WOLFGANG\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\DA-RSA.pdb
 C:\Users\WOLFGANG\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Data.dll
 C:\Users\WOLFGANG\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Data.Entity.dll
 C:\Users\WOLFGANG\Documents\GitHub\DA-RSA\DA-RSA\bin\Debug\MySql.Web.dll
-C:\Users\WOLFGANG\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csprojResolveAssemblyReference.cache
 C:\Users\WOLFGANG\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.BenutzerErstellen.resources
 C:\Users\WOLFGANG\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Form1.resources
 C:\Users\WOLFGANG\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.LehrerForm.resources
@@ -93,3 +92,4 @@ C:\Users\schueler\Desktop\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.exe
 C:\Users\schueler\Desktop\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.pdb
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Blacklist.resources
 C:\Users\schueler\Desktop\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Blacklist.resources
+C:\Users\WOLFGANG\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Blacklist.resources
