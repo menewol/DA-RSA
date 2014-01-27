@@ -20,7 +20,7 @@ namespace DA_RSA
 {
     public partial class LehrerForm : Form
     {
-        int bitLength = 512;
+        int bitLength = 32;
         BigInteger N, E, D;
         Thread _pThread, _qThread, _eThread, GeneratorThread,t,ProcListener,authThread;
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -181,10 +181,17 @@ namespace DA_RSA
 
                         // D
                         D = d;
-
-                        BroadCastKeyPair(N, E);                       
-                        Log.Add("Successfully created key pair.");
                         
+                        byte[] buf = Encoding.Default.GetBytes("abcd");
+
+                        //BroadCastKeyPair(N, E);                       
+                        
+                        BigInteger m = BitConverter.ToInt64(buf,0);
+                        BigInteger c = BigInteger.ModPow(m, D, N);
+                        BigInteger f = BigInteger.ModPow(E, m, N);
+
+                        MessageBox.Show(c.ToString() + " = " + f.ToString());
+                        Log.Add("Successfully created key pair.");
                     }
                     else
                     {
