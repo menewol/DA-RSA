@@ -378,8 +378,13 @@ namespace DA_RSA
                     foreach (string item in RegularWetzer(s))
                     {
                         string temp = Decrypt(item);
-                        ListViewItem lsv = new ListViewItem(temp);
-                        listView1.Items.Add(lsv); 
+                        if (temp != null)
+                        {
+                            string[] barbieschloss = temp.Split(';');
+                            ListViewItem lsv = new ListViewItem(barbieschloss);
+                            listView1.Items.Add(lsv); 
+                        }
+                       
                     }
 
                 });
