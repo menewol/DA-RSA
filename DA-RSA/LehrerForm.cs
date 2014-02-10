@@ -20,7 +20,7 @@ namespace DA_RSA
 {
     public partial class LehrerForm : Form
     {
-        int bitLength = 1024;
+        int bitLength = 512;
         BigInteger N, E, D;
         Thread _pThread, _qThread, _eThread, GeneratorThread,t,ProcListener,authThread;
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
