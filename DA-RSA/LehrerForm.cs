@@ -20,7 +20,7 @@ namespace DA_RSA
 {
     public partial class LehrerForm : Form
     {
-        int bitLength = 512;
+        int bitLength = 1024;
         BigInteger N, E, D;
         Thread _pThread, _qThread, _eThread, GeneratorThread,t,ProcListener,authThread;
         Socket socket= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -233,7 +233,6 @@ namespace DA_RSA
                 int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
                 string temp = Encoding.Default.GetString(buff, 0, anz);
                 temp += "\r\n" + Decrypt(temp);
-                MessageBox.Show(temp);
 
                 if (anz != 0)
                 {
