@@ -23,6 +23,7 @@ namespace DA_RSA
     public partial class Form1 : Form
     {
         MySqlConnection conn1;
+        bool logged = false;
 
         public Form1()
         {
@@ -85,6 +86,7 @@ namespace DA_RSA
                 if (lehrer == true)
                 {
                     LehrerForm lform = new LehrerForm();
+                    logged = true;
                     this.Hide();
                     lform.ShowDialog();
                     this.Close();
@@ -92,6 +94,7 @@ namespace DA_RSA
                 else
                 {
                     SchuelerForm sform = new SchuelerForm();
+                    logged = true;
                     this.Hide();
                     sform.ShowDialog();
                 }
@@ -111,6 +114,7 @@ namespace DA_RSA
             if (name == "lehrer" && pw == "lehrer")
             {
                 LehrerForm lform = new LehrerForm();
+                logged = true;
                 this.Hide();
                 lform.ShowDialog();
                 lform.Close();
@@ -119,6 +123,7 @@ namespace DA_RSA
             else if (name == "schueler" && pw == "schueler")
             {
                 SchuelerForm sform = new SchuelerForm();
+                logged = true;
                 this.Hide();
                 sform.ShowDialog();
                 Close();
@@ -158,7 +163,10 @@ namespace DA_RSA
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.Show();
+            if (logged == false)
+            {
+                this.Show();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
