@@ -392,7 +392,8 @@ namespace DA_RSA
                 
                 StreamReader srw = new StreamReader(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
 
-                String s = srw.ReadToEnd();
+                String temp = srw.ReadToEnd();
+                string s = Decrypt(temp);
                 listView1.Invoke((Action)delegate
                 {
                     listView1.Items.Clear();
