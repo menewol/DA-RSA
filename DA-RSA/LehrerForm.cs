@@ -40,31 +40,7 @@ namespace DA_RSA
         public LehrerForm()
         {
             InitializeComponent();
-            authThread = new Thread(authListener);
-            authThread.IsBackground = true;
-            authThread.Start();
-            ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
-            GeneratorThread = new Thread(pts);
-            GeneratorThread.IsBackground = true;
-            GeneratorThread.Start(bitLength);
-
-            button1.Enabled = false;
-
-            Application.ApplicationExit += Application_ApplicationExit;
-
-            SendMessage(textBox1.Handle, 0x1501, 1, "Titel.");
-            SendMessage(textBox2.Handle, 0x1501, 1, "Message.");
-
-            try
-            {
-                conn = new MySqlConnection(@"server='127.0.0.1';database='rsa_daten';uid='root';pwd=''");
-                conn.Open();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Datenbankverbindung konnte nicht aufgebaut werden!");
-                //throw;
-            }
+            
         }
 
         void Application_ApplicationExit(object sender, EventArgs e)
@@ -80,9 +56,9 @@ namespace DA_RSA
         {
             socket.SendTo(Encoding.Default.GetBytes("a" + n.ToString()), new IPEndPoint(mcast, 5555));
             socket.SendTo(Encoding.Default.GetBytes(e.ToString()), new IPEndPoint(mcast, 5555));
-            button1.Invoke((Action)delegate {
-                button1.Enabled = true;
-            });
+            //button1.invoke((action)delegate {
+            //    button1.enabled = true;
+            //});
         } 
         public void GenerateKeyPair(object TEMPbitLength)
         {
@@ -391,8 +367,7 @@ namespace DA_RSA
                 
                 StreamReader srw = new StreamReader(Directory.GetCurrentDirectory() + "\\received Files\\" + adresse[0] + "\\" + i.ToString() + fileName);
 
-                String temp = srw.ReadToEnd();
-                string s = Decrypt(temp);
+                String s = srw.ReadToEnd();
                 listView1.Invoke((Action)delegate
                 {
                     listView1.Items.Clear();
@@ -400,10 +375,11 @@ namespace DA_RSA
                     listView1.AutoArrange = false;
                     listView1.MultiSelect = false;
                     listView1.View = View.Details;
-                    foreach (string[] item in RegularWetzer(s))
+                    foreach (string item in RegularWetzer(s))
                     {
-                        ListViewItem lsv = new ListViewItem(item);
-                        listView1.Items.Add(lsv);
+                        string temp = Decrypt(item);
+                        ListViewItem lsv = new ListViewItem(temp);
+                        listView1.Items.Add(lsv); 
                     }
 
                 });
@@ -444,26 +420,53 @@ namespace DA_RSA
 
             return table;
         }
-        private List<string[]> RegularWetzer(string input)
+        private List<string> RegularWetzer(string input)
         {
             string s = input;
-            List<string[]> list = new List<string[]>();
+            List<string> list = new List<string>();
             string pattern2 = "\r\n";
 
             string[] substrings = Regex.Split(s, pattern2);
+            //for (int i = 0; i < substrings.Length; i++)
+            //{
+            //    list.Add(substrings[i].Split('\t'));
+            //}
             for (int i = 0; i < substrings.Length; i++)
             {
-                list.Add(substrings[i].Split('\t'));
+                list.Add(substrings[i]);
             }
-            list.RemoveAt(list.Count - 1);
+
             return list;
         }
 
         private void LehrerForm_Load(object sender, EventArgs e)
         {
+            authThread = new Thread(authListener);
+            authThread.IsBackground = true;
+            authThread.Start();
+            ParameterizedThreadStart pts = new ParameterizedThreadStart(GenerateKeyPair);
+            GeneratorThread = new Thread(pts);
+            GeneratorThread.IsBackground = true;
+            GeneratorThread.Start(bitLength);
 
+            button1.Enabled = false;
+
+            Application.ApplicationExit += Application_ApplicationExit;
+
+            SendMessage(textBox1.Handle, 0x1501, 1, "Titel.");
+            SendMessage(textBox2.Handle, 0x1501, 1, "Message.");
+
+            try
+            {
+                conn = new MySqlConnection(@"server='127.0.0.1';database='rsa_daten';uid='root';pwd=''");
+                conn.Open();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Datenbankverbindung konnte nicht aufgebaut werden!");
+                //throw;
+            }
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
 

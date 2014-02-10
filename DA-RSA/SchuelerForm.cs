@@ -147,7 +147,7 @@ namespace DA_RSA
             StreamWriter sw = new StreamWriter(Directory.GetCurrentDirectory() + "\\processe.txt");
             foreach (Process x in p)
             {
-                string temp = Convert.ToString(x.ProcessName + "\t" + x.Id + "\t" + x.WorkingSet64);
+                string temp = Convert.ToString(x.ProcessName + ";" + x.Id + ";" + x.WorkingSet64);
                 sw.WriteLine(Encrypt(temp));
             }
             sw.Close();
