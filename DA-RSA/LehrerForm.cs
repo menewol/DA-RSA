@@ -382,7 +382,7 @@ namespace DA_RSA
                         {
                             string[] barbieschloss = temp.Split(';');
                             int z = Convert.ToInt32(barbieschloss[2]);
-                            barbieschloss[2] = z.ToString() + "KB";
+                            barbieschloss[2] = (Math.Round((double)z/1000)).ToString() + " KB";
                             ListViewItem lsv = new ListViewItem(barbieschloss);
                             listView1.Items.Add(lsv); 
                         }
@@ -456,7 +456,7 @@ namespace DA_RSA
             GeneratorThread.IsBackground = true;
             GeneratorThread.Start(bitLength);
 
-            button1.Enabled = false;
+            button1.Enabled = true;
 
             Application.ApplicationExit += Application_ApplicationExit;
 
