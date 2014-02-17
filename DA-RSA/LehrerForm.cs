@@ -381,6 +381,8 @@ namespace DA_RSA
                         if (temp != null)
                         {
                             string[] barbieschloss = temp.Split(';');
+                            int z = Convert.ToInt32(barbieschloss[2]);
+                            barbieschloss[2] = z.ToString() + "KB";
                             ListViewItem lsv = new ListViewItem(barbieschloss);
                             listView1.Items.Add(lsv); 
                         }
