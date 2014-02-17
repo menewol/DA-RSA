@@ -326,6 +326,8 @@ namespace DA_RSA
         private string Encrypt(string SrcText)
         {
             string tempOutput = null;
+            char chr = ' ';
+            BigInteger tmp = 0;
             try
             {
                 BigInteger e = E;
@@ -345,10 +347,15 @@ namespace DA_RSA
                 }
 
                 tempOutput = BigInteger.ModPow(SrcText.Length, e, n).ToString();
+                for (int i = 0; i < SrcText.Length; i++)
+                {
+                    int z = (int)(char)SrcText[i];
+                    byte[] hua = BitConverter.GetBytes(z);
+                }
 
                 for (int i = 0; i < SrcText.Length; i++)
                 {
-                    char chr = SrcText[i];
+                    chr = SrcText[i];
 
                     BigInteger c = BigInteger.ModPow(Convert.ToInt32(chr), e, n);
 
