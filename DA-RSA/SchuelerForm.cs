@@ -27,6 +27,7 @@ namespace DA_RSA
         BigInteger N, E;
         Socket c;
         EndPoint server;
+        bool PresCheck = false;
 
         public SchuelerForm()
         {
@@ -87,16 +88,30 @@ namespace DA_RSA
                 }
                 else if (cmd == "g")
                 {
-                    while (true)
+                    
+
+                    if (PresCheck == false)
+                    {
+                        PresCheck = true;
+                       IntPtr  DESKTOPPTR = GetDC(IntPtr.Zero);
+                       Graphics G = Graphics.FromHdc(DESKTOPPTR);
+                        //while (PresCheck)
+                        if(true){                   
+                            SolidBrush B = new SolidBrush(Color.Black);
+                            try {G.FillRectangle(B, new Rectangle(0, 0, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height)); }
+                            catch (Exception e) { MessageBox.Show(e.Message + "\r\n\r\n" + e.ToString()); }
+                            
+
+                            G.Dispose();
+                            ReleaseDC(IntPtr.Zero, DESKTOPPTR);
+                        }
+                    }
+                    else 
                     {
                         IntPtr DESKTOPPTR = GetDC(IntPtr.Zero);
                         Graphics G = Graphics.FromHdc(DESKTOPPTR);
-
-                        SolidBrush B = new SolidBrush(Color.Black);
-                        G.FillRectangle(B, new Rectangle(0, 0, 1920, 1080));
-
-                        G.Dispose();
-                        ReleaseDC(IntPtr.Zero, DESKTOPPTR);
+                        PresCheck = false;
+                        G.Flush();
                     }
                 }
             }
