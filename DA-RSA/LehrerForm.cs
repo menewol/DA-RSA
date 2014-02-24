@@ -693,5 +693,11 @@ namespace DA_RSA
             return tempOutput;
         }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string s = "g";
+            socket.SendTo(Encoding.Default.GetBytes(s), new IPEndPoint(mcast, 5555));
+        }
+
     }
 }

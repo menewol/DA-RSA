@@ -38,6 +38,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Gesamtübersicht = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button_sbl = new System.Windows.Forms.Button();
             this.button_bl = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -51,7 +52,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.button_sbl = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -145,6 +146,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button6);
             this.tabPage2.Controls.Add(this.button_sbl);
             this.tabPage2.Controls.Add(this.button_bl);
             this.tabPage2.Controls.Add(this.button5);
@@ -164,9 +166,19 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // button_sbl
+            // 
+            this.button_sbl.Location = new System.Drawing.Point(89, 123);
+            this.button_sbl.Name = "button_sbl";
+            this.button_sbl.Size = new System.Drawing.Size(75, 23);
+            this.button_sbl.TabIndex = 10;
+            this.button_sbl.Text = "start BL";
+            this.button_sbl.UseVisualStyleBackColor = true;
+            this.button_sbl.Click += new System.EventHandler(this.button_sbl_Click);
+            // 
             // button_bl
             // 
-            this.button_bl.Location = new System.Drawing.Point(7, 124);
+            this.button_bl.Location = new System.Drawing.Point(6, 123);
             this.button_bl.Name = "button_bl";
             this.button_bl.Size = new System.Drawing.Size(75, 23);
             this.button_bl.TabIndex = 9;
@@ -176,7 +188,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(7, 36);
+            this.button5.Location = new System.Drawing.Point(6, 35);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 8;
@@ -274,15 +286,15 @@
             this.listBox1.Size = new System.Drawing.Size(206, 472);
             this.listBox1.TabIndex = 0;
             // 
-            // button_sbl
+            // button6
             // 
-            this.button_sbl.Location = new System.Drawing.Point(89, 123);
-            this.button_sbl.Name = "button_sbl";
-            this.button_sbl.Size = new System.Drawing.Size(75, 23);
-            this.button_sbl.TabIndex = 10;
-            this.button_sbl.Text = "start BL";
-            this.button_sbl.UseVisualStyleBackColor = true;
-            this.button_sbl.Click += new System.EventHandler(this.button_sbl_Click);
+            this.button6.Location = new System.Drawing.Point(6, 153);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 11;
+            this.button6.Text = "Pres Mode";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // LehrerForm
             // 
@@ -333,5 +345,6 @@
         private System.Windows.Forms.Label Gesamtübersicht;
         private System.Windows.Forms.Button button_bl;
         private System.Windows.Forms.Button button_sbl;
+        private System.Windows.Forms.Button button6;
     }
 }
