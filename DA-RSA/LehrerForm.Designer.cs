@@ -38,6 +38,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Gesamtübersicht = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button6 = new System.Windows.Forms.Button();
             this.button_sbl = new System.Windows.Forms.Button();
             this.button_bl = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -52,7 +53,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -146,6 +147,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button7);
             this.tabPage2.Controls.Add(this.button6);
             this.tabPage2.Controls.Add(this.button_sbl);
             this.tabPage2.Controls.Add(this.button_bl);
@@ -165,6 +167,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(6, 153);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 11;
+            this.button6.Text = "Pres Mode";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button_sbl
             // 
@@ -286,15 +298,15 @@
             this.listBox1.Size = new System.Drawing.Size(206, 472);
             this.listBox1.TabIndex = 0;
             // 
-            // button6
+            // button7
             // 
-            this.button6.Location = new System.Drawing.Point(6, 153);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 11;
-            this.button6.Text = "Pres Mode";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.button7.Location = new System.Drawing.Point(89, 153);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.TabIndex = 12;
+            this.button7.Text = "Filesharing";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // LehrerForm
             // 
@@ -346,5 +358,6 @@
         private System.Windows.Forms.Button button_bl;
         private System.Windows.Forms.Button button_sbl;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
     }
 }

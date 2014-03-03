@@ -36,11 +36,12 @@ namespace DA_RSA
         string[] adresse;
         List<IPEndPoint> clList = new List<IPEndPoint>();
         MySqlConnection conn;
+        NotifyIcon noti;
 
-        public LehrerForm()
+        public LehrerForm(NotifyIcon nf1)
         {
             InitializeComponent();
-            
+            noti = nf1;
         }
 
         void Application_ApplicationExit(object sender, EventArgs e)
@@ -697,6 +698,12 @@ namespace DA_RSA
         {
             string s = "g";
             socket.SendTo(Encoding.Default.GetBytes(s), new IPEndPoint(mcast, 5555));
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Filesharing_Lehrer fsl = new Filesharing_Lehrer(noti);
+            fsl.ShowDialog();
         }
 
     }

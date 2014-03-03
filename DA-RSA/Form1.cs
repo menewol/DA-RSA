@@ -85,7 +85,7 @@ namespace DA_RSA
 
                 if (lehrer == true)
                 {
-                    LehrerForm lform = new LehrerForm();
+                    LehrerForm lform = new LehrerForm(notifyIcon1);
                     logged = true;
                     this.Hide();
                     lform.ShowDialog();
@@ -113,7 +113,7 @@ namespace DA_RSA
 
             if (name == "lehrer" && pw == "lehrer")
             {
-                LehrerForm lform = new LehrerForm();
+                LehrerForm lform = new LehrerForm(notifyIcon1);
                 logged = true;
                 this.Hide();
                 lform.ShowDialog();

@@ -61,6 +61,12 @@
     <Compile Include="Blacklist.Designer.cs">
       <DependentUpon>Blacklist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filesharing_Lehrer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Filesharing_Lehrer.Designer.cs">
+      <DependentUpon>Filesharing_Lehrer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Blacklist.resx">
       <DependentUpon>Blacklist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filesharing_Lehrer.resx">
+      <DependentUpon>Filesharing_Lehrer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
