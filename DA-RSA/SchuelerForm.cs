@@ -28,8 +28,9 @@ namespace DA_RSA
         Socket c;
         EndPoint server;
         bool PresCheck = false;
+        string schueler;
 
-        public SchuelerForm()
+        public SchuelerForm(string s)
         {
             InitializeComponent();
             ListenerThread = new Thread(Receive);
@@ -37,7 +38,7 @@ namespace DA_RSA
             notifyIcon_rsa.Visible = true;
             ReceiverThread = new Thread(Receive2);
             ReceiverThread.Start();
-
+            schueler = s;
 
             //OnAppStart();
             //Application.ApplicationExit += new EventHandler(this.OnAppExit);
@@ -76,7 +77,7 @@ namespace DA_RSA
                     notifyIcon_rsa.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
                     IPEndPoint ipep = (IPEndPoint)server;
                     ipep.Port = 5555;
-                    socket.SendTo(Encoding.Default.GetBytes(Encrypt("iwas")), ipep);
+                    socket.SendTo(Encoding.Default.GetBytes(Encrypt(schueler)), ipep);
                 }
                 else if (cmd == "f")
                 {

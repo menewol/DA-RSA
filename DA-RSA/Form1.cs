@@ -93,7 +93,7 @@ namespace DA_RSA
                 }
                 else
                 {
-                    SchuelerForm sform = new SchuelerForm();
+                    SchuelerForm sform = new SchuelerForm(name);
                     logged = true;
                     this.Hide();
                     sform.ShowDialog();
@@ -122,7 +122,7 @@ namespace DA_RSA
             }
             else if (name == "schueler" && pw == "schueler")
             {
-                SchuelerForm sform = new SchuelerForm();
+                SchuelerForm sform = new SchuelerForm(name);
                 logged = true;
                 this.Hide();
                 sform.ShowDialog();

@@ -209,13 +209,13 @@ namespace DA_RSA
                 endp = new IPEndPoint(IPAddress.Any, 0);
                 int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
                 string temp = Encoding.Default.GetString(buff, 0, anz);
-                temp += "\r\n" + Decrypt(temp);
+                temp = Decrypt(temp);
 
                 if (anz != 0)
                 {
                     listBox1.Invoke((Action)delegate
                     {
-                        listBox1.Items.Add(endp.ToString());
+                        listBox1.Items.Add(temp + " - " + endp.ToString());
                     });
     
                 }
