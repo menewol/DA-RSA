@@ -122,8 +122,8 @@ namespace DA_RSA
                     int filelength = BitConverter.ToInt16(tmpBuffer, 8);
                     byte[] temp= new byte[filelength];
                     Buffer.BlockCopy(tmpBuffer, 10, temp, 0, filelength);
-                    string tm2p = Environment.SpecialFolder.MyDocuments.ToString();
-                    //File.WriteAllBytes(tm2p + "datei." + fileformat, temp);
+                   
+                    File.WriteAllBytes("C:\\Users\\schueler\\Desktop\\datei." + fileformat, temp);
                     notifyIcon_rsa.ShowBalloonTip(2000, "Datei empfangen",@"Es wurde eine neue Datei empfangen. Sie wurde im Ordner 'Eigene Dateien' abgelegt", ToolTipIcon.Info);
                 }
             }
