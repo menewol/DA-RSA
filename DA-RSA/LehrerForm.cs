@@ -712,7 +712,8 @@ namespace DA_RSA
             if (listBox1.SelectedIndex != -1)
             {
                 string email = "";
-                MySqlCommand cmd = new MySqlCommand("SELECT email FROM logindaten WHERE name='" + listBox1.Items[listBox1.SelectedIndex].ToString().Split('-') + "';", conn);
+
+                MySqlCommand cmd = new MySqlCommand("SELECT email FROM logindaten WHERE name='" + listBox1.Items[listBox1.SelectedIndex].ToString().Split('-')[0] + "';", conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())
@@ -736,7 +737,7 @@ namespace DA_RSA
                 System.Net.NetworkCredential credentials =
                    new System.Net.NetworkCredential("da.rsa@htl-ottakring.ac.at", "1l4Co72R03n5q8cK");
                 smtpClient.Credentials = credentials;
-
+                smtpClient.EnableSsl = true;
                 smtpClient.Send(mailMsg);
             }
             else
