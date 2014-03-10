@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Net.Mail;
 
 namespace DA_RSA
 {
@@ -203,11 +204,11 @@ namespace DA_RSA
             Socket tmp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             tmp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             tmp.Bind(new IPEndPoint(IPAddress.Any, 5555));
-            byte[] buff = new byte[1024];
+            byte[] buff = new byte[2048];
             while (true)
             {
                 endp = new IPEndPoint(IPAddress.Any, 0);
-                int anz = tmp.ReceiveFrom(buff, 1024, SocketFlags.None, ref endp);
+                int anz = tmp.ReceiveFrom(buff, 2048, SocketFlags.None, ref endp);
                 string temp = Encoding.Default.GetString(buff, 0, anz);
                 temp = Decrypt(temp);
 
@@ -215,7 +216,7 @@ namespace DA_RSA
                 {
                     listBox1.Invoke((Action)delegate
                     {
-                        listBox1.Items.Add(temp + " - " + endp.ToString());
+                        listBox1.Items.Add(temp + "-" + endp.ToString());
                     });
     
                 }
@@ -704,6 +705,44 @@ namespace DA_RSA
         {
             Filesharing_Lehrer fsl = new Filesharing_Lehrer(noti);
             fsl.ShowDialog();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex != -1)
+            {
+                string email = "";
+                MySqlCommand cmd = new MySqlCommand("SELECT email FROM logindaten WHERE name='" + listBox1.Items[listBox1.SelectedIndex].ToString().Split('-') + "';", conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    email = rdr[0].ToString();
+                }
+                rdr.Close();
+
+                MailMessage mailMsg = new MailMessage();
+                mailMsg.To.Add(email);
+                // From
+                MailAddress mailAddress = new MailAddress("da.rsa@htl-ottakring.ac.at");
+                mailMsg.From = mailAddress;
+
+                // Subject and Body
+                mailMsg.Subject = "Schulpc";
+                mailMsg.Body = "Du hast vergessen deinen PC herunterzufahren. Bitte komm zurück und schalte ihn aus!";
+
+                // Init SmtpClient and send on port 587 in my case. (Usual=port25)
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                System.Net.NetworkCredential credentials =
+                   new System.Net.NetworkCredential("da.rsa@htl-ottakring.ac.at", "1l4Co72R03n5q8cK");
+                smtpClient.Credentials = credentials;
+
+                smtpClient.Send(mailMsg);
+            }
+            else
+            {
+                MessageBox.Show("Sie müssen einen Client auswählen!");
+            }
         }
 
     }
