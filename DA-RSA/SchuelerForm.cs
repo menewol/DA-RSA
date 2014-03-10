@@ -116,6 +116,15 @@ namespace DA_RSA
                         G.Flush();
                     }
                 }
+                else if (cmd == "h")
+                {
+                    string fileformat = Encoding.Default.GetString(tmpBuffer, 1, 8);
+                    int filelength = BitConverter.ToInt16(tmpBuffer, 9);
+                    byte[] temp= new byte[filelength];
+                    Buffer.BlockCopy(tmpBuffer, 10, temp, 0, filelength);
+                    File.WriteAllBytes(Environment.SpecialFolder.MyDocuments.ToString() + "datei." + fileformat, temp);
+                    notifyIcon_rsa.ShowBalloonTip(2000, "Datei empfangen",@"Es wurde eine neue Datei empfangen. Sie wurde im Ordner 'Eigene Dateien' abgelegt", ToolTipIcon.Info);
+                }
             }
 
         }
