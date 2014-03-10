@@ -62,7 +62,7 @@ namespace DA_RSA
             server = new IPEndPoint(IPAddress.Any, 0);
             while (true)
             {
-                byte[] tmpBuffer = new byte[1024];
+                byte[] tmpBuffer = new byte[2048];
                 
                 int tmp = socket.ReceiveFrom(tmpBuffer, ref server);
                 //MessageBox.Show(tmp.ToString() + " " + server.ToString());
@@ -77,7 +77,8 @@ namespace DA_RSA
                     notifyIcon_rsa.ShowBalloonTip(2000, "Public Key reveiced", "Es wurde einer öffentlicher Schlüssel empfangen", ToolTipIcon.Info);
                     IPEndPoint ipep = (IPEndPoint)server;
                     ipep.Port = 5555;
-                    socket.SendTo(Encoding.Default.GetBytes(Encrypt(schueler)), ipep);
+                    string schue = Encrypt(schueler);
+                    socket.SendTo(Encoding.Default.GetBytes(schue), ipep);
                 }
                 else if (cmd == "f")
                 {
