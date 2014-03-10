@@ -38,11 +38,13 @@ namespace DA_RSA
             temp = File.ReadAllBytes((string)ofd.FileName);
             byte[] sendArr = new byte[temp.Length + 10];
             int zw = temp.Length;
+            //mit 10-offset file ins array schreiben
             Buffer.BlockCopy(temp, 0, sendArr, 10, zw);
-
+            //case 'h' zum file empfangen.
             sendArr[0] = (int)'h';
             string[] z = ofd.FileName.Split('.');
             temp = Encoding.Default.GetBytes(z[z.Length-1]);
+            //filename & filelength reinschreiben
             Buffer.BlockCopy(temp,0,sendArr,1,temp.Length);
             Buffer.BlockCopy(BitConverter.GetBytes(zw),0,sendArr,8,2);
 
