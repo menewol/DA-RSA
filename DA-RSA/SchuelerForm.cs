@@ -119,6 +119,7 @@ namespace DA_RSA
                 else if (cmd == "h")
                 {
                     string fileformat = Encoding.Default.GetString(tmpBuffer, 1, 8);
+                    fileformat = fileformat.Split('\\')[0];
                     int filelength = BitConverter.ToInt16(tmpBuffer, 8);
                     byte[] temp= new byte[filelength];
                     Buffer.BlockCopy(tmpBuffer, 10, temp, 0, filelength);
