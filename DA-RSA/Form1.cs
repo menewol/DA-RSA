@@ -24,6 +24,9 @@ namespace DA_RSA
     {
         MySqlConnection conn1;
         bool logged = false;
+        EndPoint server;
+        Thread ListenerThread;
+        
 
         public Form1()
         {
@@ -31,8 +34,37 @@ namespace DA_RSA
             notifyIcon1.Visible = true;
             Application.ApplicationExit += Application_ApplicationExit;
             conn1 = new MySqlConnection(@"server='213.47.71.253';database='rsa';uid='rsa';pwd='rsa'");
+            ListenerThread = new Thread(Receive);
+            ListenerThread.Start();
         }
-        
+
+        public void Receive()
+        {
+
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse("239.255.10.10"), IPAddress.Any));
+            socket.Bind(new IPEndPoint(IPAddress.Any, 5555));
+            server = new IPEndPoint(IPAddress.Any, 0);
+            while (true)
+            {
+                byte[] tmpBuffer = new byte[32];
+                
+                int tmp = socket.ReceiveFrom(tmpBuffer, ref server);
+                //MessageBox.Show(tmp.ToString() + " " + server.ToString());
+
+                string cmd = Encoding.Default.GetString(tmpBuffer, 0, 3);
+
+                if (cmd == "log")
+                {
+                    if (logged == false)
+                    {
+                        this.Show();
+                    }
+                }
+            }
+        }
+
         void Application_ApplicationExit(object sender, EventArgs e)
         {
             Log.Write();

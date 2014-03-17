@@ -764,5 +764,10 @@ namespace DA_RSA
             }
         }
 
+        private void button9_Click(object sender, EventArgs e)
+        {
+            socket.SendTo(Encoding.Default.GetBytes("log"), new IPEndPoint(mcast, 5555));
+        }
+
     }
 }
