@@ -370,11 +370,13 @@ namespace DA_RSA
             MessageBox.Show("LALALA");
         }
         //CaptureScreenToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\bild.png", ImageFormat.Png);
+        
         private string Encrypt(string SrcText)
         {
             string tempOutput = null;
-            char chr = ' ';
-            BigInteger tmp = 0;
+
+            byte[] tempb = new byte[4];
+
             try
             {
                 BigInteger e = E;
@@ -393,21 +395,30 @@ namespace DA_RSA
                     return null;
                 }
 
-                tempOutput = BigInteger.ModPow(SrcText.Length, e, n).ToString();
-                /*
-                for (int i = 0; i < SrcText.Length; i++)
-                {
-                    int z = (int)(char)SrcText[i];
-                    byte[] hua = BitConverter.GetBytes(z);
-                    byte[] hua2 = BitConverter.GetBytes(tmp);
-                    Buffer.BlockCopy(hua, 0, hua2, 0, 1);
-                } 
-                */
-                for (int i = 0; i < SrcText.Length; i++)
-                {
-                    chr = SrcText[i];
+                
 
-                    BigInteger c = BigInteger.ModPow(Convert.ToInt32(chr), e, n);
+                int a = SrcText.Length % 4;
+
+                if (a != 0)
+                {
+                    for (int i = 0; i < 4 - a; i++)
+                    {
+                        SrcText += " ";
+                    }
+                }
+                
+                tempOutput = BigInteger.ModPow(SrcText.Length, e, n).ToString();
+
+                for (int i = 0; i < SrcText.Length; i += 4)
+                {
+                    //char chr = SrcText[i];
+
+                    for (int t = 0; t < 4; t++)
+                    {
+                        tempb[t] = (byte)SrcText[i + t];
+                    }
+
+                    BigInteger c = BigInteger.ModPow(BitConverter.ToInt32(tempb, 0), e, n);
 
                     if (tempOutput == "")
                     {
