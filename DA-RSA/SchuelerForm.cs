@@ -395,8 +395,6 @@ namespace DA_RSA
                     return null;
                 }
 
-                
-
                 int a = SrcText.Length % 4;
 
                 if (a != 0)

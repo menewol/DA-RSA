@@ -189,7 +189,8 @@ namespace DA_RSA
             if (listBox1.SelectedIndex != -1)
             {
                 adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
-                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
+                adresse = adresse[0].Split('-');
+                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[1]), 8888);
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 s.Connect(ipep);
                 s.Send(Encoding.Default.GetBytes("b"));
@@ -498,6 +499,8 @@ namespace DA_RSA
         {
             int tmpID=0;
             adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
+            adresse = adresse[0].Split('-');
+            
 
             if (listView1.SelectedItems.Count > 0)
             {
@@ -507,7 +510,7 @@ namespace DA_RSA
                     tmpID = Convert.ToInt32(item.SubItems[1].Text);
                 }  
             }
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[1]), 8888);
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             s.Connect(ipep);
             s.Send(Encoding.Default.GetBytes("d"+tmpID.ToString()));
@@ -520,7 +523,8 @@ namespace DA_RSA
             if (listBox1.SelectedIndex != -1)
             {
                 adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
-                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
+                adresse = adresse[0].Split('-');
+                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[1]), 8888);
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 s.Connect(ipep);
                 s.Send(Encoding.Default.GetBytes("e" + textBox1.Text + ":" + textBox2.Text));
@@ -539,7 +543,8 @@ namespace DA_RSA
             if (listBox1.SelectedIndex != -1)
             {
                 adresse = listBox1.Items[listBox1.SelectedIndex].ToString().Split(':');
-                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[0]), 8888);
+                adresse = adresse[0].Split('-');
+                IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(adresse[1]), 8888);
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 s.Connect(ipep);
                 s.Send(Encoding.Default.GetBytes("s"));
