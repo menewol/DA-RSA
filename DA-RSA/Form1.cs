@@ -44,7 +44,7 @@ namespace DA_RSA
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse("239.255.10.10"), IPAddress.Any));
-            socket.Bind(new IPEndPoint(IPAddress.Any, 5555));
+            socket.Bind(new IPEndPoint(IPAddress.Any, 5554));
             server = new IPEndPoint(IPAddress.Any, 0);
             while (true)
             {
