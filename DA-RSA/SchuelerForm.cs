@@ -90,8 +90,6 @@ namespace DA_RSA
                 }
                 else if (cmd == "g")
                 {
-                    
-
                     if (PresCheck == false)
                     {
                         PresCheck = true;
