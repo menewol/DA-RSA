@@ -202,6 +202,7 @@ namespace DA_RSA
         }
         private void authListener()
         {
+            int i = 0;
             Socket tmp = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             tmp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             tmp.Bind(new IPEndPoint(IPAddress.Any, 5555));
@@ -219,7 +220,24 @@ namespace DA_RSA
                     {
                         listBox1.Items.Add(temp + "-" + endp.ToString());
                     });
-    
+                    tabPage1.Invoke((Action)delegate
+                    {
+                        ListBox lsb = new ListBox();
+                        tabPage1.Controls.Add(lsb);
+                        lsb.Size = new Size(120, 121);
+                        lsb.Items.Add(temp);
+                        lsb.Items.Add(endp.ToString());
+                        if (i < 7)
+                        {
+                            lsb.Location = new Point(15 + (130 * i), 85);
+                        }
+                        else if(i < 14)
+                        {
+                            lsb.Location = new Point(15 + (130 * i), 216);
+                        }
+                        else lsb.Location = new Point(15 + (130 * i), 347);
+                    });
+                    i++;
                 }
             }
         }

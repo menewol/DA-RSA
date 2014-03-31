@@ -28,25 +28,43 @@ namespace DA_RSA
         EndPoint server;
         Thread ListenerThread, BlThread;
         string[] blacklist;
+        bool lehr = false;
         
 
-        public Form1()
+        public Form1(string[] args)
         {
             InitializeComponent();
             notifyIcon1.Visible = true;
             Application.ApplicationExit += Application_ApplicationExit;
             Application.ApplicationExit += new EventHandler(this.OnAppExit);
             conn1 = new MySqlConnection(@"server='213.47.71.253';database='rsa';uid='rsa';pwd='rsa'");
-            ListenerThread = new Thread(Receive);
-            ListenerThread.Start();
-            ParameterizedThreadStart pts = new ParameterizedThreadStart(blacklisten);
-            BlThread = new Thread(pts);
-            blacklist = new string[] { "cmd", "regedit", "taskmgr", "powershell" };
-            BlThread.Start(blacklist);
+            
+            if (args.Length >= 1 && args[0] == "-lehrer")
+            {
+                lehr = true;
+            }
 
-            UInt32 m;
-            UInt32.TryParse("1", out m);
-            Write("DisableTaskMgr", m);
+            if (lehr == false)
+            {
+                ListenerThread = new Thread(Receive);
+                ListenerThread.Start();
+
+                ParameterizedThreadStart pts = new ParameterizedThreadStart(blacklisten);
+                BlThread = new Thread(pts);
+                blacklist = new string[] { "cmd", "regedit", "taskmgr", "powershell", "msconfig" };
+                BlThread.Start(blacklist);
+
+
+                UInt32 m;
+                UInt32.TryParse("1", out m);
+                Write("DisableTaskMgr", m);
+            }
+            else
+            {
+                UInt32 m;
+                UInt32.TryParse("0", out m);
+                Write("DisableTaskMgr", m);
+            }
         }
 
         public void Receive()
@@ -210,7 +228,10 @@ namespace DA_RSA
 
         private void OnAppExit(object sender, EventArgs e)
         {
-            Application.Restart();
+            if (lehr == false)
+            {
+                Application.Restart();
+            }
         }
 
         static string GetMd5Hash(string input)
@@ -224,7 +245,7 @@ namespace DA_RSA
             StringBuilder sBuilder = new StringBuilder();
 
             // Loop through each byte of the hashed data 
-            // and format each one as a hexadecimal string.
+            // and format each one as a hexad ecimal string.
             for (int i = 0; i < data.Length; i++)
             {
                 sBuilder.Append(data[i].ToString("x2"));
