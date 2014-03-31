@@ -230,7 +230,7 @@ namespace DA_RSA
         {
             if (lehr == false)
             {
-                Application.Restart();
+                //Application.Restart();
             }
         }
 
