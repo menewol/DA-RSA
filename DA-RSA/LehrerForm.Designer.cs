@@ -56,7 +56,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -119,7 +118,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.listBox2);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.Gesamtübersicht);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -334,14 +332,6 @@
             this.listBox1.Size = new System.Drawing.Size(206, 472);
             this.listBox1.TabIndex = 0;
             // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(15, 85);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(120, 121);
-            this.listBox2.TabIndex = 2;
-            // 
             // LehrerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -395,6 +385,5 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.ListBox listBox2;
     }
 }
