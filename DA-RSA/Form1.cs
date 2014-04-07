@@ -88,7 +88,10 @@ namespace DA_RSA
                 {
                     if (logged == false)
                     {
-                        this.Show();
+                        this.Invoke((Action)delegate
+                        {
+                            this.Show();
+                        });
                     }
                 }
             }
