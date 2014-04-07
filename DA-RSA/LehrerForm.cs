@@ -233,9 +233,9 @@ namespace DA_RSA
                         }
                         else if(i < 14)
                         {
-                            lsb.Location = new Point(15 + (130 * i), 216);
+                            lsb.Location = new Point(15 + (130 * (i - 7)), 216);
                         }
-                        else lsb.Location = new Point(15 + (130 * i), 347);
+                        else lsb.Location = new Point(15 + (130 * (i - 14)), 347);
                     });
                     i++;
                 }
