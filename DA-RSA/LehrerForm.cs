@@ -36,13 +36,21 @@ namespace DA_RSA
         EndPoint endp;
         string[] adresse;
         List<IPEndPoint> clList = new List<IPEndPoint>();
+        List<ListBox> lblist = new List<ListBox>();
         MySqlConnection conn;
         NotifyIcon noti;
+        System.Timers.Timer timer = new System.Timers.Timer(30000);
 
         public LehrerForm(NotifyIcon nf1)
         {
             InitializeComponent();
             noti = nf1;
+            timer.Elapsed += timer_Elapsed;
+        }
+
+        void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            socket.SendTo(Encoding.Default.GetBytes("i"), new IPEndPoint(mcast, 5555));
         }
 
         void Application_ApplicationExit(object sender, EventArgs e)
@@ -213,31 +221,61 @@ namespace DA_RSA
                 int anz = tmp.ReceiveFrom(buff, 2048, SocketFlags.None, ref endp);
                 string temp = Encoding.Default.GetString(buff, 0, anz);
                 temp = Decrypt(temp);
-
+                string[] s = temp.Split(';');
                 if (anz != 0)
                 {
-                    listBox1.Invoke((Action)delegate
+                    if (s.Length == 1)
                     {
-                        listBox1.Items.Add(temp + "-" + endp.ToString());
-                    });
-                    tabPage1.Invoke((Action)delegate
+                        listBox1.Invoke((Action)delegate
+                        {
+                            if (!listBox1.Items.Contains(temp + "-" + endp.ToString()))
+                            {
+                                listBox1.Items.Add(temp + "-" + endp.ToString());
+                            }
+                        });
+                        tabPage1.Invoke((Action)delegate
+                        {
+                            ListBox lsb1 = new ListBox();
+                            lsb1.Items.Add(temp);
+                            lsb1.Items.Add(endp.ToString());
+
+                            int a= lblist.BinarySearch(lsb1);
+                            MessageBox.Show(a.ToString());
+                          
+                            ListBox lsb = new ListBox();
+                            tabPage1.Controls.Add(lsb);
+                            lblist.Add(lsb);
+                            lsb.Size = new Size(120, 121);
+                            lsb.Items.Add(temp);
+                            lsb.Items.Add(endp.ToString());
+                            if (i < 7)
+                            {
+                                lsb.Location = new Point(15 + (130 * i), 85);
+                            }
+                            else if (i < 14)
+                            {
+                                lsb.Location = new Point(15 + (130 * (i - 7)), 216);
+                            }
+                            else lsb.Location = new Point(15 + (130 * (i - 14)), 347);
+                        });
+                        i++;
+                    }
+                    else
                     {
-                        ListBox lsb = new ListBox();
-                        tabPage1.Controls.Add(lsb);
-                        lsb.Size = new Size(120, 121);
-                        lsb.Items.Add(temp);
-                        lsb.Items.Add(endp.ToString());
-                        if (i < 7)
+                        tabPage1.Invoke((Action)delegate
                         {
-                            lsb.Location = new Point(15 + (130 * i), 85);
-                        }
-                        else if(i < 14)
-                        {
-                            lsb.Location = new Point(15 + (130 * (i - 7)), 216);
-                        }
-                        else lsb.Location = new Point(15 + (130 * (i - 14)), 347);
-                    });
-                    i++;
+                            foreach (ListBox item in lblist)
+                            {
+                                if (item.Items.Contains(endp.ToString()))
+                                {
+                                    item.Items.Clear();
+                                    item.Items.Add(temp);
+                                    item.Items.Add(endp.ToString());
+                                    item.Items.Add(s[1] + "Prozesse mussten \r\ngekillt werden");
+                                }
+                            }
+                        });
+                    }
                 }
             }
         }
@@ -483,6 +521,7 @@ namespace DA_RSA
 
             SendMessage(textBox1.Handle, 0x1501, 1, "Titel.");
             SendMessage(textBox2.Handle, 0x1501, 1, "Message.");
+            SendMessage(textBox3.Handle, 0x1501, 1, "Suche Prozess");
 
             try
             {

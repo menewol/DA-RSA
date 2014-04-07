@@ -29,6 +29,7 @@ namespace DA_RSA
         EndPoint server;
         bool PresCheck = false;
         string schueler;
+        int counter = 0;
 
         public SchuelerForm(string s)
         {
@@ -125,6 +126,13 @@ namespace DA_RSA
                    
                     File.WriteAllBytes("C:\\Users\\schueler\\Desktop\\datei." + fileformat, temp);
                     notifyIcon_rsa.ShowBalloonTip(2000, "Datei empfangen",@"Es wurde eine neue Datei empfangen. Sie wurde im Ordner 'Eigene Dateien' abgelegt", ToolTipIcon.Info);
+                }
+                else if (cmd == "i")
+                {
+                    IPEndPoint ipep = (IPEndPoint)server;
+                    ipep.Port = 5555;
+                    string cow = Encrypt(schueler + ";" + counter.ToString());
+                    socket.SendTo(Encoding.Default.GetBytes(cow), ipep);
                 }
             }
 
@@ -228,6 +236,7 @@ namespace DA_RSA
                             try
                             {
                                 x.Kill();
+                                counter++;
                                 break;
                             }
                             catch (Exception)

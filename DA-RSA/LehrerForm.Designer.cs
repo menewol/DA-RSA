@@ -56,6 +56,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -149,6 +151,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.textBox3);
+            this.tabPage2.Controls.Add(this.button10);
             this.tabPage2.Controls.Add(this.button9);
             this.tabPage2.Controls.Add(this.button8);
             this.tabPage2.Controls.Add(this.button7);
@@ -270,9 +274,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(87, 35);
+            this.button3.Location = new System.Drawing.Point(537, 455);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(143, 23);
             this.button3.TabIndex = 4;
             this.button3.Text = "Kill";
             this.button3.UseVisualStyleBackColor = true;
@@ -286,9 +290,9 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
-            this.listView1.Location = new System.Drawing.Point(685, 6);
+            this.listView1.Location = new System.Drawing.Point(537, 6);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(266, 472);
+            this.listView1.Size = new System.Drawing.Size(414, 444);
             this.listView1.TabIndex = 3;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
@@ -327,10 +331,26 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(473, 6);
+            this.listBox1.Location = new System.Drawing.Point(325, 6);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(206, 472);
             this.listBox1.TabIndex = 0;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(686, 455);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(131, 23);
+            this.button10.TabIndex = 15;
+            this.button10.Text = "Refresh";
+            this.button10.UseVisualStyleBackColor = true;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(823, 457);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(128, 20);
+            this.textBox3.TabIndex = 16;
             // 
             // LehrerForm
             // 
@@ -385,5 +405,7 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button button10;
     }
 }
