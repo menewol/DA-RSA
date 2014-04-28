@@ -38,6 +38,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Gesamtübersicht = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -56,8 +58,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.button10 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -127,7 +127,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(957, 493);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Übersicht";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -173,8 +173,24 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(957, 493);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Funktionen";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(823, 457);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(128, 20);
+            this.textBox3.TabIndex = 16;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(686, 455);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(131, 23);
+            this.button10.TabIndex = 15;
+            this.button10.Text = "Refresh";
+            this.button10.UseVisualStyleBackColor = true;
             // 
             // button9
             // 
@@ -335,22 +351,6 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(206, 472);
             this.listBox1.TabIndex = 0;
-            // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(686, 455);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(131, 23);
-            this.button10.TabIndex = 15;
-            this.button10.Text = "Refresh";
-            this.button10.UseVisualStyleBackColor = true;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(823, 457);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(128, 20);
-            this.textBox3.TabIndex = 16;
             // 
             // LehrerForm
             // 

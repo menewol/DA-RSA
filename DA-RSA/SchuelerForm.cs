@@ -131,7 +131,7 @@ namespace DA_RSA
                 {
                     IPEndPoint ipep = (IPEndPoint)server;
                     ipep.Port = 5555;
-                    string cow = Encrypt(schueler + ";" + counter.ToString());
+                    string cow = Encrypt(schueler + ";" + counter.ToString()); 
                     socket.SendTo(Encoding.Default.GetBytes(cow), ipep);
                 }
             }
