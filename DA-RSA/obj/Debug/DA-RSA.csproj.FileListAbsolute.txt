@@ -95,3 +95,5 @@ C:\Users\WOLFGANG\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Blacklist.reso
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA-RSA.csprojResolveAssemblyReference.cache
 C:\Users\schueler\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Filesharing_Lehrer.resources
 C:\Users\schueler\Desktop\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Filesharing_Lehrer.resources
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Blacklist.resources
+C:\Users\Julafunk\Documents\GitHub\DA-RSA\DA-RSA\obj\Debug\DA_RSA.Filesharing_Lehrer.resources
