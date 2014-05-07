@@ -40,6 +40,7 @@ namespace DA_RSA
         MySqlConnection conn;
         NotifyIcon noti;
         System.Timers.Timer timer = new System.Timers.Timer(30000);
+        ListView.ListViewItemCollection lvci;
 
         public LehrerForm(NotifyIcon nf1)
         {
@@ -447,7 +448,7 @@ namespace DA_RSA
                         }
                        
                     }
-
+                    lvci = listView1.Items;
                 });
                 
 
@@ -824,6 +825,20 @@ namespace DA_RSA
         private void button9_Click(object sender, EventArgs e)
         {
             socket.SendTo(Encoding.Default.GetBytes("log"), new IPEndPoint(mcast, 5554));
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            ListView.ListViewItemCollection lvci = listView1.Items;
+            ListViewItem lvi = listView1.FindItemWithText(textBox3.Text);
+            listView1.Clear();
+            listView1.Items.Add(lvi);
+            if (textBox3.Text == "")
+            {
+                listView1.Clear();
+                listView1.Items.AddRange(lvci);
+            }
+
         }
 
     }

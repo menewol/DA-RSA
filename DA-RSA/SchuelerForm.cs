@@ -236,6 +236,7 @@ namespace DA_RSA
                             try
                             {
                                 x.Kill();
+                                MessageBox.Show("Dieses Programm wurde durch den Lehrer gesperrt", "Achtung", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 counter++;
                                 break;
                             }
